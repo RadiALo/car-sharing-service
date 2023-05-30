@@ -6,4 +6,25 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
 
+    <changeSet id="01" author="Alona">
+        <createTable tableName="cars">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="model" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="brand" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="inventory" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="daily_fee" type="money">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>

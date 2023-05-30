@@ -33,7 +33,7 @@ public class UserController {
     @GetMapping("/users/me")
     private UserResponseDto getMe(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
-        User user = userService.findByUsername(details.getUsername()).orElseThrow();
+        User user = userService.findByEmail(details.getUsername()).orElseThrow();
         return userMapper.fromModel(user);
     }
 
@@ -42,7 +42,7 @@ public class UserController {
                                      @RequestBody UserRequestDto userRequestDto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         User user = userMapper.toModel(userRequestDto);
-        user.setId(userService.findByUsername(details
+        user.setId(userService.findByEmail(details
                 .getUsername()).orElseThrow().getId());
         userService.update(user);
         return userMapper.fromModel(user);

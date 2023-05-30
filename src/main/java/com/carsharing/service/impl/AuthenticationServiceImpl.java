@@ -21,4 +21,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userService.save(user);
         return user;
     }
+
+    @Override
+    public User login(String email, String password) {
+        User user = userService.findByEmail(email).orElseThrow();
+        if (user.getPassword().equals(password)) {
+            return user;
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }

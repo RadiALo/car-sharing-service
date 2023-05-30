@@ -23,6 +23,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
     private static final int BEARER_LENGTH = 7;
+    private static final String BEARER = "Bearer ";
+    private static final String ROLE = "role";
+    private static final String HEADER_NAME = "Authorization";
 
     @Value("${spring.jwt.token.secret-key:secret}")
     private String secretKey;
@@ -37,7 +40,7 @@ public class JwtTokenProvider {
 
     public String createToken(String login, List<String> role) {
         Claims claims = Jwts.claims().setSubject(login);
-        claims.put("role", role);
+        claims.put(ROLE, role);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
         return Jwts.builder()
@@ -60,8 +63,8 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+        String bearerToken = req.getHeader(HEADER_NAME);
+        if (bearerToken != null && bearerToken.startsWith(BEARER)) {
             return bearerToken.substring(BEARER_LENGTH);}
         return null;
     }

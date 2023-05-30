@@ -35,7 +35,7 @@ public class CarSharingBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
-            long chatId = update.getMessage().getChatId();
+            Long chatId = update.getMessage().getChatId();
 
             switch (messageText) {
                 case "/start":

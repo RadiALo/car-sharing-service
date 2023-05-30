@@ -1,10 +1,13 @@
 package com.carsharing.service.impl;
 
+import com.carsharing.model.User;
 import com.carsharing.model.UserChat;
 import com.carsharing.repository.UserChatRepository;
 import com.carsharing.service.UserChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,5 +17,10 @@ public class UserChatServiceImpl implements UserChatService {
     @Override
     public UserChat save(UserChat userChat) {
         return userChatRepository.save(userChat);
+    }
+
+    @Override
+    public Optional<UserChat> findByUser(User user) {
+        return userChatRepository.findByUser(user);
     }
 }

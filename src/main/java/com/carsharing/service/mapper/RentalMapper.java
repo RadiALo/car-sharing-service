@@ -5,7 +5,9 @@ import com.carsharing.dto.response.RentalResponseDto;
 import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
 import com.carsharing.model.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RentalMapper implements RequestMapper<RentalRequestDto, Rental>,
         ResponseMapper<RentalResponseDto, Rental> {
 

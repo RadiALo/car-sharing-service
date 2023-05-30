@@ -48,6 +48,10 @@ public class CarSharingBot extends TelegramLongPollingBot {
                         userChat.setUser(user.get());
                         userChat.setChatId(chatId);
                         userChatService.save(userChat);
+                    } else {
+                        String answer = "Unfortunately, there is no user with such email "
+                                + messageText;
+                        sendMessage(chatId, answer);
                     }
             }
         }

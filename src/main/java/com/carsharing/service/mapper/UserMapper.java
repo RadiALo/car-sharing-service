@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper implements RequestMapper<UserRequestDto, User>,
     ResponseMapper<UserResponseDto, User> {
-
-    // some changes
-
     @Override
     public User toModel(UserRequestDto dto) {
         User user = new User();

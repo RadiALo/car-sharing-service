@@ -1,6 +1,7 @@
-package com.carsharing.service;
+package com.carsharing.service.impl;
 
 import com.carsharing.bot.CarSharingBot;
+import com.carsharing.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,6 +15,7 @@ public class TelegramNotificationService implements NotificationService {
     @Override
     public void sendNotification(String rental) {
         SendMessage sendMessage = new SendMessage();
+
         try {
             carSharingBot.execute(sendMessage);
         } catch (TelegramApiException e) {

@@ -1,17 +1,25 @@
 package com.carsharing.bot;
 
 import com.carsharing.config.BotConfig;
-import lombok.AllArgsConstructor;
+import com.carsharing.model.User;
+import com.carsharing.model.UserChat;
+import com.carsharing.service.UserChatService;
+import com.carsharing.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.Optional;
+
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarSharingBot extends TelegramLongPollingBot {
     private final BotConfig botConfig;
+    private final UserService userService;
+    private final UserChatService userChatService;
 
     @Override
     public String getBotUsername() {
@@ -32,14 +40,22 @@ public class CarSharingBot extends TelegramLongPollingBot {
             switch (messageText) {
                 case "/start":
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
-                    // it takes to get chatId and add to user
                     break;
+                default:
+                    Optional<User> user = userService.findByUsername(messageText);
+                    if (user.isPresent()) {
+                        UserChat userChat = new UserChat();
+                        userChat.setUser(user.get());
+                        userChat.setChatId(chatId);
+                        userChatService.save(userChat);
+                    }
             }
         }
     }
 
     private void startCommandReceived(Long chatId, String name) {
-        String answer = "Hi, " + name + ". Nice to meet you!";
+        String answer = "Hi, " + name + ". Nice to meet you!" + System.lineSeparator()
+                + "Please enter your email";
         sendMessage(chatId, answer);
     }
 

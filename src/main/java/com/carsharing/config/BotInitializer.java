@@ -1,7 +1,7 @@
 package com.carsharing.config;
 
 import com.carsharing.bot.CarSharingBot;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BotInitializer {
     private final CarSharingBot carSharingBot;
 

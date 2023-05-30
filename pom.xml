@@ -8,8 +8,8 @@
         <version>3.1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>car-sharing</artifactId>
+    <groupId>com</groupId>
+    <artifactId>car-sharing-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>car-sharing</name>
     <description>car-sharing</description>
@@ -88,5 +88,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

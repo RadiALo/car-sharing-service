@@ -1,11 +1,12 @@
-package com.carsharing.dto;
+package com.carsharing.dto.response;
 
 import com.carsharing.model.CarType;
 import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class CarRequestDto {
+public class CarResponseDto {
+    private Long id;
     private String model;
     private String brand;
     private CarType type;

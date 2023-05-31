@@ -18,7 +18,7 @@ public class UserChat {
     private Long id;
     @MapsId
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
     private Long chatId;
 }

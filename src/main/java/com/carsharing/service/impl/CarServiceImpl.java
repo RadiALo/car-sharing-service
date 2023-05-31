@@ -36,7 +36,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car inventoryDecrease(Car car) {
-        if(car.getInventory() == 0) {
+        if (car.getInventory() == 0) {
             throw new EmptyCarInventoryException("No car available at current moment.");
         }
         car.setInventory(car.getInventory() - 1);

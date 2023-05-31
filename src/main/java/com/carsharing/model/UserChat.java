@@ -1,5 +1,6 @@
 package com.carsharing.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "user_chat")
+@Table(name = "users_chats")
 public class UserChat {
     @Id
     private Long id;
@@ -20,5 +21,6 @@ public class UserChat {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(name = "chat_id")
     private Long chatId;
 }

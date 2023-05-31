@@ -34,15 +34,15 @@ public class RentalController {
         return responseMapper.fromModel(rentalService.get(id));
     }
 
-    @GetMapping("/user_id={userId}")
-    public List<RentalResponseDto> findByUserId(@PathVariable Long userId) {
-        return rentalService.getByUserId(userId)
+    @GetMapping("/user_id={id}")
+    public List<RentalResponseDto> findByUserId(@PathVariable Long id) {
+        return rentalService.getByUserId(id)
                 .stream()
                 .map(responseMapper::fromModel)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/{id}/return/")
+    @PostMapping("/{id}/return")
     public RentalResponseDto setActualReturnDate(@PathVariable Long id,
                                                  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date actualTime) {
         Rental rental = rentalService.get(id);

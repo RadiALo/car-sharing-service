@@ -69,7 +69,7 @@ public class CarSharingBot extends TelegramLongPollingBot {
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
-
+            throw new RuntimeException("Can't send message " + textToSend);
         }
     }
 }

@@ -8,12 +8,18 @@ import com.carsharing.service.CarService;
 import com.carsharing.service.RentalService;
 import com.carsharing.service.mapper.RequestMapper;
 import com.carsharing.service.mapper.ResponseMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +33,7 @@ public class RentalController {
     @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto requestDto) {
         Rental rentalToModel = requestMapper.toModel(requestDto);
-        Rental rental =rentalService.save(rentalToModel);
+        Rental rental = rentalService.save(rentalToModel);
         Car car = rental.getCar();
         carService.inventoryDecrease(car);
         return responseMapper.fromModel(rental);
@@ -47,8 +53,9 @@ public class RentalController {
     }
 
     @PostMapping("/{id}/return")
-    public RentalResponseDto setActualReturnDate(@PathVariable Long id,
-                                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date actualTime) {
+    public RentalResponseDto setActualReturnDate(
+            @PathVariable Long id,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date actualTime) {
         Rental rental = rentalService.get(id);
         Car car = rental.getCar();
         carService.inventoryIncrease(car);

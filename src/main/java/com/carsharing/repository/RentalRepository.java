@@ -1,8 +1,8 @@
 package com.carsharing.repository;
 
 import com.carsharing.model.Rental;
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RentalRepository extends JpaRepository<Rental, Long> {
     List<Rental> findRentalByUserId(Long id);

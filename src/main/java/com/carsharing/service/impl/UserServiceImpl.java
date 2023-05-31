@@ -4,9 +4,8 @@ import com.carsharing.model.User;
 import com.carsharing.repository.UserRepository;
 import com.carsharing.service.UserService;
 import java.util.Optional;
-import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service

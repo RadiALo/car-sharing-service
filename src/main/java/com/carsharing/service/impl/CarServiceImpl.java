@@ -19,7 +19,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car findById(Long id) {
-        return carRepository.findById(id).orElseThrow( () ->
+        return carRepository.findById(id).orElseThrow(() ->
                 new RuntimeException("Can't find car by such id " + id));
     }
 

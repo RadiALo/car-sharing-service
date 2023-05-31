@@ -1,14 +1,13 @@
 package com.carsharing.controller;
 
+import com.carsharing.dto.request.UserRequestDto;
 import com.carsharing.dto.response.TokenResponseDto;
 import com.carsharing.dto.response.UserResponseDto;
-import com.carsharing.dto.request.UserRequestDto;
 import com.carsharing.model.User;
 import com.carsharing.security.jwt.JwtTokenProvider;
 import com.carsharing.service.AuthenticationService;
 import com.carsharing.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;

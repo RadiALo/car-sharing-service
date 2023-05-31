@@ -5,12 +5,11 @@ import com.carsharing.model.Rental;
 import com.carsharing.model.UserChat;
 import com.carsharing.service.NotificationService;
 import com.carsharing.service.UserChatService;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

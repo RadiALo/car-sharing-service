@@ -1,5 +1,6 @@
 package com.carsharing.service.impl;
 
+import com.carsharing.exception.EmptyCarInventoryException;
 import com.carsharing.model.Car;
 import com.carsharing.repository.CarRepository;
 import com.carsharing.service.CarService;
@@ -31,5 +32,22 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> findAllCars() {
         return carRepository.findAll();
+    }
+
+    @Override
+    public Car inventoryDecrease(Car car) {
+        if(car.getInventory() == 0) {
+            throw new EmptyCarInventoryException("No car available at current moment.");
+        }
+        car.setInventory(car.getInventory() - 1);
+        carRepository.save(car);
+        return car;
+    }
+
+    @Override
+    public Car inventoryIncrease(Car car) {
+        car.setInventory(car.getInventory() + 1);
+        carRepository.save(car);
+        return car;
     }
 }

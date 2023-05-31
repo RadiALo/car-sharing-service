@@ -11,4 +11,8 @@ public interface CarService {
     void deleteById(Long id);
 
     List<Car> findAllCars();
+
+    Car inventoryDecrease(Car car);
+
+    Car inventoryIncrease(Car car);
 }

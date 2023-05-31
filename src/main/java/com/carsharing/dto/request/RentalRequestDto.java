@@ -7,7 +7,6 @@ import java.util.Date;
 public class RentalRequestDto {
     private Date rentalDate;
     private Date returnDate;
-    private Date actualReturnDate;
     private Long carId;
     private Long userId;
 }

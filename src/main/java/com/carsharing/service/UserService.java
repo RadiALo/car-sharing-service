@@ -1,7 +1,6 @@
 package com.carsharing.service;
 
 import com.carsharing.model.User;
-
 import java.util.Optional;
 
 public interface UserService {

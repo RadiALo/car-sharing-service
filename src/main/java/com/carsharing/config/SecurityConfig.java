@@ -1,7 +1,7 @@
 package com.carsharing.config;
 
-import com.carsharing.security.jwt.JwtTokenProvider;
 import com.carsharing.security.jwt.JwtConfigurer;
+import com.carsharing.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

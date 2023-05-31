@@ -1,16 +1,15 @@
 package com.carsharing.security.jwt;
 
+import com.carsharing.exception.InvalidJwtAuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import com.carsharing.exception.InvalidJwtAuthenticationException;
+import java.util.Base64;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -65,7 +64,8 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader(HEADER_NAME);
         if (bearerToken != null && bearerToken.startsWith(BEARER)) {
-            return bearerToken.substring(BEARER_LENGTH);}
+            return bearerToken.substring(BEARER_LENGTH);
+        }
         return null;
     }
 

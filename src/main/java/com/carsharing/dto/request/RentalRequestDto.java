@@ -1,7 +1,7 @@
 package com.carsharing.dto.request;
 
-import lombok.Data;
 import java.util.Date;
+import lombok.Data;
 
 @Data
 public class RentalRequestDto {

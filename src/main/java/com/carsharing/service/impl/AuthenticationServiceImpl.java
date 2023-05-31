@@ -1,8 +1,8 @@
 package com.carsharing.service.impl;
 
 import com.carsharing.model.Role;
-import com.carsharing.service.AuthenticationService;
 import com.carsharing.model.User;
+import com.carsharing.service.AuthenticationService;
 import com.carsharing.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

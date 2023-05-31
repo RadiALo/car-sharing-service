@@ -2,6 +2,8 @@ package com.carsharing.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,7 @@ public class Car {
     private Long id;
     private String model;
     private String brand;
+    @Enumerated(EnumType.STRING)
     private CarType type;
     @Positive
     private int inventory;

@@ -7,12 +7,18 @@ import com.carsharing.service.RentalService;
 import com.carsharing.service.mapper.RequestMapper;
 import com.carsharing.service.mapper.ResponseMapper;
 import com.carsharing.util.DataUtil;
-import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,8 +49,9 @@ public class RentalController {
     }
 
     @PostMapping("/{id}/return")
-    public RentalResponseDto setActualReturnDate(@PathVariable Long id,
-                                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date actualTime) {
+    public RentalResponseDto setActualReturnDate(
+            @PathVariable Long id,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date actualTime) {
         Rental rental = rentalService.get(id);
         rental.setActualReturnDate(dataUtil.currentData(actualTime));
         return responseMapper.fromModel(rental);

@@ -41,7 +41,7 @@ public class CarSharingBot extends TelegramLongPollingBot {
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                     break;
                 default:
-                    Optional<User> user = userService.findByUsername(messageText);
+                    Optional<User> user = userService.findByEmail(messageText);
                     if (user.isPresent()) {
                         UserChat userChat = new UserChat();
                         userChat.setUser(user.get());

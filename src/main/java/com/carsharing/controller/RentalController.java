@@ -33,6 +33,7 @@ public class RentalController {
     @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto requestDto) {
         Rental rentalToModel = requestMapper.toModel(requestDto);
+        rentalToModel.setActive(true);
         Rental rental = rentalService.save(rentalToModel);
         Car car = rental.getCar();
         carService.inventoryDecrease(car);
@@ -45,8 +46,9 @@ public class RentalController {
     }
 
     @GetMapping("/user_id={id}")
-    public List<RentalResponseDto> findByUserId(@PathVariable Long id) {
-        return rentalService.getByUserId(id)
+    public List<RentalResponseDto> findByUserId(@PathVariable Long id,
+                                                @RequestParam boolean isActive) {
+        return rentalService.getByUserId(id, isActive)
                 .stream()
                 .map(responseMapper::fromModel)
                 .collect(Collectors.toList());
@@ -60,6 +62,7 @@ public class RentalController {
         Car car = rental.getCar();
         carService.inventoryIncrease(car);
         rental.setActualReturnDate(actualTime);
+        rental.setActive(false);
         rentalService.save(rental);
         return responseMapper.fromModel(rental);
     }

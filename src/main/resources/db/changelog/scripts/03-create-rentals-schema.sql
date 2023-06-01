@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS rentals (
                         actual_return_date TIMESTAMP,
                         car_id BIGINT,
                         user_id BIGINT,
+                        is_active BIT,
                         FOREIGN KEY (car_id) REFERENCES cars(id),
                         FOREIGN KEY (user_id) REFERENCES users(id)
     );

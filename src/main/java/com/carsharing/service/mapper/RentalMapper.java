@@ -39,6 +39,7 @@ public class RentalMapper implements RequestMapper<RentalRequestDto, Rental>,
         rentalResponseDto.setRentalDate(model.getRentalDate());
         rentalResponseDto.setReturnDate(model.getReturnDate());
         rentalResponseDto.setActualReturnDate(model.getActualReturnDate());
+        rentalResponseDto.setActive(model.isActive());
         return rentalResponseDto;
     }
 }

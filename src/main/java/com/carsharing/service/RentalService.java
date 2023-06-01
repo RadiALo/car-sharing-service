@@ -8,5 +8,5 @@ public interface RentalService {
 
     Rental get(Long id);
 
-    List<Rental> getByUserId(Long id);
+    List<Rental> getByUserId(Long id, boolean isActive);
 }

@@ -31,6 +31,8 @@ public class Rental {
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     private User user;
+    @Column(name = "is_active")
+    private boolean active;
 
     @Override
     public String toString() {
@@ -38,6 +40,7 @@ public class Rental {
                 + "id=" + id
                 + ", rentalDate=" + rentalDate
                 + ", returnDate=" + returnDate
-                + ", actualReturnDate=" + returnDate + '}';
+                + ", actualReturnDate=" + returnDate
+                + ", isActive= " + active + "}";
     }
 }

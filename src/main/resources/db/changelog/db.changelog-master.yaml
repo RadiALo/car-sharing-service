@@ -1,10 +1,9 @@
 databaseChangeLog:
   - include:
-      file: /db/changelog/scripts/02-create-users-schema.sql
-  - include:
       file: /db/changelog/scripts/01-create-cars-schema.sql
+  - include:
+      file: /db/changelog/scripts/02-create-users-schema.sql
   - include:
       file: /db/changelog/scripts/03-create-rentals-schema.sql
   - include:
       file: /db/changelog/scripts/05-create-user-chats-schema.sql
-

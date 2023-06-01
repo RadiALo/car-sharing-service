@@ -24,9 +24,10 @@ public class TelegramNotificationService implements NotificationService {
         if (userChat.isPresent()) {
             sendMessage.setChatId(String.valueOf(userChat.get().getChatId()));
             sendMessage.setText(rental.getUser().getFirstName() + ", you have rent car "
-                    + rental.getCar().getModel() + "! Your daily fee:"
-                    + rental.getCar().getDailyFee() + ". You need to return car until "
-                    + rental.getActualReturnDate().toString() + ".");
+                    + rental.getCar().getModel() + "!\nYour daily fee: "
+                    + rental.getCar().getDailyFee() + ".\nRental date: "
+                    + rental.getRentalDate().toString() + ".\nYou need to return car until: "
+                    + rental.getReturnDate().toString() + ".");
             try {
                 carSharingBot.execute(sendMessage);
             } catch (TelegramApiException e) {

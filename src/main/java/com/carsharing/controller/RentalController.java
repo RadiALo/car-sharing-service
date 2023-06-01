@@ -5,6 +5,7 @@ import com.carsharing.dto.response.RentalResponseDto;
 import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
 import com.carsharing.service.CarService;
+import com.carsharing.service.NotificationService;
 import com.carsharing.service.RentalService;
 import com.carsharing.service.mapper.RequestMapper;
 import com.carsharing.service.mapper.ResponseMapper;
@@ -29,11 +30,13 @@ public class RentalController {
     private final RequestMapper<RentalRequestDto, Rental> requestMapper;
     private final ResponseMapper<RentalResponseDto, Rental> responseMapper;
     private final CarService carService;
+    private final NotificationService notificationService;
 
     @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto requestDto) {
         Rental rentalToModel = requestMapper.toModel(requestDto);
         Rental rental = rentalService.save(rentalToModel);
+        notificationService.sendNotification(rental);
         Car car = rental.getCar();
         carService.inventoryDecrease(car);
         return responseMapper.fromModel(rental);

@@ -12,5 +12,7 @@ COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
+COPY src/main/resources/db/changelog/ /src/main/resources/db/changelog/
+COPY src/main/resources/db/changelog/scripts/ /src/main/resources/db/changelog/scripts/
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
 EXPOSE 5005

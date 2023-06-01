@@ -39,7 +39,7 @@ public class RentalController {
         carService.inventoryDecrease(car);
         rental.setActive(true);
         rentalService.save(rental);
-        notificationService.sendNotification(rental);
+        notificationService.sendCreationNotification(rental);
         return responseMapper.fromModel(rental);
     }
 
@@ -67,6 +67,7 @@ public class RentalController {
         rental.setActualReturnDate(actualTime);
         rental.setActive(false);
         rentalService.save(rental);
+        notificationService.sendReturnConformation(rental);
         return responseMapper.fromModel(rental);
     }
 }

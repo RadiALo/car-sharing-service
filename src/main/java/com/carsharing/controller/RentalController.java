@@ -34,12 +34,12 @@ public class RentalController {
 
     @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto requestDto) {
-        Rental rentalToModel = requestMapper.toModel(requestDto);
-        rentalToModel.setActive(true);
-        Rental rental = rentalService.save(rentalToModel);
-        notificationService.sendNotification(rental);
+        Rental rental = requestMapper.toModel(requestDto);
         Car car = rental.getCar();
         carService.inventoryDecrease(car);
+        rental.setActive(true);
+        rentalService.save(rental);
+        notificationService.sendNotification(rental);
         return responseMapper.fromModel(rental);
     }
 

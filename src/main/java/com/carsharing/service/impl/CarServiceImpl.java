@@ -35,19 +35,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car inventoryDecrease(Car car) {
+    public void inventoryDecrease(Car car) {
         if (car.getInventory() == 0) {
             throw new EmptyCarInventoryException("No car available at current moment.");
         }
         car.setInventory(car.getInventory() - 1);
         carRepository.save(car);
-        return car;
     }
 
     @Override
-    public Car inventoryIncrease(Car car) {
+    public void inventoryIncrease(Car car) {
         car.setInventory(car.getInventory() + 1);
         carRepository.save(car);
-        return car;
     }
 }

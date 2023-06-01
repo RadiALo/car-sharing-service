@@ -13,10 +13,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserService userService;
 
     @Override
-    public User register(String email, String password) {
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
+    public User register(User user) {
         user.setRole(Role.CUSTOMER);
         userService.save(user);
         return user;

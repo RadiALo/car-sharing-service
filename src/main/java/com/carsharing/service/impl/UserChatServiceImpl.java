@@ -20,6 +20,6 @@ public class UserChatServiceImpl implements UserChatService {
 
     @Override
     public Optional<UserChat> findByUser(User user) {
-        return userChatRepository.findByUser(user);
+        return userChatRepository.findByUserId(user.getId());
     }
 }

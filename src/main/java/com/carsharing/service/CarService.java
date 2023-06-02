@@ -12,7 +12,7 @@ public interface CarService {
 
     List<Car> findAllCars();
 
-    Car inventoryDecrease(Car car);
+    void inventoryDecrease(Car car);
 
-    Car inventoryIncrease(Car car);
+    void inventoryIncrease(Car car);
 }

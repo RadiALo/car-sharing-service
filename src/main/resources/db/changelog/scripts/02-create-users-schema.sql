@@ -1,8 +1,10 @@
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    first_name VARCHAR(255) NOT NULL,
-    second_name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL
-    );
+CREATE TABLE IF NOT EXISTS `users` (
+                         `id` bigint NOT NULL AUTO_INCREMENT,
+                         `email` varchar(255) DEFAULT NULL,
+                         `first_name` varchar(255) DEFAULT NULL,
+                         `password` varchar(255) DEFAULT NULL,
+                         `role` varchar(255) DEFAULT NULL,
+                         `second_name` varchar(255) DEFAULT NULL,
+                         PRIMARY KEY (`id`),
+                         UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`)
+);

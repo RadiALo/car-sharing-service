@@ -1,4 +1,5 @@
 CREATE TABLE IF NOT EXISTS `rentals` (
+                           `is_active` bit(1) DEFAULT NULL,
                            `actual_return_date` datetime(6) DEFAULT NULL,
                            `car_id` bigint DEFAULT NULL,
                            `id` bigint NOT NULL AUTO_INCREMENT,

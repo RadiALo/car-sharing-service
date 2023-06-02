@@ -3,9 +3,6 @@ package com.carsharing.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +14,8 @@ import lombok.Setter;
 public class UserChat {
     @Id
     private Long id;
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
     @Column(name = "chat_id")
     private Long chatId;
 }

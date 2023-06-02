@@ -13,7 +13,6 @@ import lombok.Setter;
 @Table(name = "users_chats")
 public class UserChat {
     @Id
-    private Long id;
     @Column(name = "user_id")
     private Long userId;
     @Column(name = "chat_id")

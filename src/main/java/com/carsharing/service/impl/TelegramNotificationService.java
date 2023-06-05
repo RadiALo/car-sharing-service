@@ -18,7 +18,7 @@ public class TelegramNotificationService implements NotificationService {
     private final UserChatService userChatService;
 
     @Override
-    public void sendNotification(Rental rental) {
+    public void sendNotificationAboutPossibleRental(Rental rental) {
         SendMessage sendMessage = new SendMessage();
         Optional<UserChat> userChat = userChatService.findByUser(rental.getUser());
         if (userChat.isPresent()) {
@@ -28,6 +28,23 @@ public class TelegramNotificationService implements NotificationService {
                     + rental.getCar().getDailyFee() + ".\nRental date: "
                     + rental.getRentalDate().toString() + ".\nYou need to return car until: "
                     + rental.getReturnDate().toString() + ".");
+            try {
+                carSharingBot.execute(sendMessage);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public void sendNotificationAboutImpossibleRental(Rental rental) {
+        SendMessage sendMessage = new SendMessage();
+        Optional<UserChat> userChat = userChatService.findByUser(rental.getUser());
+        if (userChat.isPresent()) {
+            sendMessage.setChatId(String.valueOf(userChat.get().getChatId()));
+            String message = String.format("Sorry! All car of this model: %s has already occupied.\n"
+                    + "Please select free car.", rental.getCar().getModel());
+            sendMessage.setText(message);
             try {
                 carSharingBot.execute(sendMessage);
             } catch (TelegramApiException e) {

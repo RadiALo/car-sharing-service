@@ -3,7 +3,7 @@ package com.carsharing.service.impl;
 import com.carsharing.model.User;
 import com.carsharing.repository.UserRepository;
 import com.carsharing.service.UserService;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new NoSuchElementException("Can't find User by email: " + email));
     }
 }

@@ -5,7 +5,6 @@ import com.carsharing.model.User;
 import com.carsharing.model.UserChat;
 import com.carsharing.service.UserChatService;
 import com.carsharing.service.UserService;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -41,14 +40,13 @@ public class CarSharingBot extends TelegramLongPollingBot {
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                     break;
                 default:
-                    Optional<User> user = userService.findByEmail(messageText);
-                    if (user.isPresent()) {
+                    try {
+                        User user = userService.findByEmail(messageText);
                         UserChat userChat = new UserChat();
-                        //userChat.setUser(user.get());
-                        userChat.setUserId(user.get().getId());
+                        userChat.setUserId(user.getId());
                         userChat.setChatId(chatId);
                         userChatService.save(userChat);
-                    } else {
+                    } catch (Exception e) {
                         String answer = "Unfortunately, there is no user with such email "
                                 + messageText;
                         sendMessage(chatId, answer);

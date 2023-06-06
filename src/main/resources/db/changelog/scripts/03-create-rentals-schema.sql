@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS `rentals` (
+                           `actual_return_date` date DEFAULT NULL,
                            `is_active` bit(1) DEFAULT NULL,
-                           `actual_return_date` datetime(6) DEFAULT NULL,
+                           `rental_date` date DEFAULT NULL,
+                           `return_date` date DEFAULT NULL,
                            `car_id` bigint DEFAULT NULL,
                            `id` bigint NOT NULL AUTO_INCREMENT,
-                           `rental_date` datetime(6) DEFAULT NULL,
-                           `return_date` datetime(6) DEFAULT NULL,
                            `user_id` bigint DEFAULT NULL,
                            PRIMARY KEY (`id`),
                            KEY `FKb3vpbdnk78p1epicm7a7urvfh` (`car_id`),

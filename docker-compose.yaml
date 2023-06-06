@@ -28,6 +28,6 @@ services:
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
         "spring.jpa.hibernate.ddl-auto" : "validate",
         "spring.liquibase.enabled" : "true",
-        "bot.username" : "CarServiceSharingBot",
-        "bot.token" : "6052092939:AAG6Z22mD6rzpXvukEAZvt5x0bNDn9iyNes"
+        "bot.username" : "$BOT_USER_NAME",
+        "bot.token" : "$BOT_TOKEN"
       }'

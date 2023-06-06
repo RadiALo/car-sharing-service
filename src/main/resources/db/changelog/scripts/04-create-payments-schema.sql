@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
                             `id` bigint NOT NULL AUTO_INCREMENT,
                             `rental_id` bigint DEFAULT NULL,
                             `session_id` varchar(255) DEFAULT NULL,
-                            `session_url` varchar(255) DEFAULT NULL,
+                            `session_url` longtext DEFAULT NULL,
                             `status` varchar(255) DEFAULT NULL,
                             `type` varchar(255) DEFAULT NULL,
                             PRIMARY KEY (`id`),

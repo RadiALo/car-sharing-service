@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.net.URL;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,18 +27,28 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    private PaymentStatus status;
+    private Status status;
     @Enumerated(EnumType.STRING)
-    private PaymentType type;
+    private Type type;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id")
     @EqualsAndHashCode.Exclude
     private Rental rental;
     @Column(name = "session_url")
-    private String sessionUrl;
+    private URL sessionUrl;
     @Column(name = "session_id")
     private String sessionId;
     private BigDecimal amount;
+
+    public enum Type {
+        PAYMENT,
+        FINE
+    }
+
+    public enum Status {
+        PENDING,
+        PAID
+    }
 
     @Override
     public String toString() {

@@ -4,8 +4,7 @@ import com.carsharing.dto.request.CarRequestDto;
 import com.carsharing.dto.response.CarResponseDto;
 import com.carsharing.model.Car;
 import com.carsharing.service.CarService;
-import com.carsharing.service.mapper.RequestMapper;
-import com.carsharing.service.mapper.ResponseMapper;
+import com.carsharing.service.mapper.DtoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -22,36 +21,35 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/cars")
 public class CarController {
-    private CarService carService;
-    private ResponseMapper<CarResponseDto, Car> responseMapper;
-    private RequestMapper<CarRequestDto, Car> requestMapper;
+    private final CarService carService;
+    private final DtoMapper<Car, CarRequestDto, CarResponseDto> dtoMapper;
 
     @PostMapping
     public CarResponseDto add(@RequestBody CarRequestDto carRequestDto) {
-        return responseMapper
-                .fromModel(carService.save(requestMapper.toModel(carRequestDto)));
+        return dtoMapper
+                .toDto(carService.save(dtoMapper.toModel(carRequestDto)));
     }
 
     @GetMapping
     public List<CarResponseDto> findAllCars() {
         return carService.findAllCars()
                 .stream()
-                .map(responseMapper::fromModel)
+                .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public CarResponseDto findById(@PathVariable Long id) {
-        return responseMapper.fromModel(carService.findById(id));
+        return dtoMapper.toDto(carService.findById(id));
     }
 
     @PutMapping("/{id}")
     public CarResponseDto update(@PathVariable Long id,
                                  @RequestBody CarRequestDto carRequestDto) {
-        Car car = requestMapper.toModel(carRequestDto);
+        Car car = dtoMapper.toModel(carRequestDto);
         car.setId(id);
         carService.save(car);
-        return responseMapper.fromModel(car);
+        return dtoMapper.toDto(car);
     }
 
     @DeleteMapping("/{id}")

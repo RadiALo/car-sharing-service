@@ -6,4 +6,6 @@ public interface NotificationService {
     void sendNotificationAboutPossibleRental(Rental rental);
 
     void sendNotificationAboutImpossibleRental(Rental rental);
+
+    void sentNotificationAboutFailedDeadLine();
 }

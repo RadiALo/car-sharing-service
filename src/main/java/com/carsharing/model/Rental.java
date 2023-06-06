@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,11 +23,11 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "rental_date")
-    private Date rentalDate;
+    private LocalDate rentalDate;
     @Column(name = "return_date")
-    private Date returnDate;
+    private LocalDate returnDate;
     @Column(name = "actual_return_date")
-    private Date actualReturnDate;
+    private LocalDate actualReturnDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     private Car car;

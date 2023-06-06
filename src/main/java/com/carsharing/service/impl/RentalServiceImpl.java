@@ -2,7 +2,6 @@ package com.carsharing.service.impl;
 
 import com.carsharing.model.Rental;
 import com.carsharing.repository.RentalRepository;
-import com.carsharing.service.NotificationService;
 import com.carsharing.service.RentalService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,16 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
-    private final NotificationService notificationService;
 
     @Override
     public Rental save(Rental rental) {
-        if (rental.getCar().getInventory() > 0) {
-            notificationService.sendNotificationAboutPossibleRental(rental);
-            return rentalRepository.save(rental);
-        }
-        notificationService.sendNotificationAboutImpossibleRental(rental);
-        return new Rental();
+        return rentalRepository.save(rental);
     }
 
     @Override
@@ -36,5 +29,10 @@ public class RentalServiceImpl implements RentalService {
             return rentalRepository.findRentalByActiveIsTrueAndUserId(userId);
         }
         return rentalRepository.findRentalByUserId(userId);
+    }
+
+    @Override
+    public List<Rental> findAll() {
+        return rentalRepository.findAll();
     }
 }

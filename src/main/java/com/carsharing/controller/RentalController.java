@@ -7,8 +7,7 @@ import com.carsharing.model.Rental;
 import com.carsharing.service.CarService;
 import com.carsharing.service.NotificationService;
 import com.carsharing.service.RentalService;
-import com.carsharing.service.mapper.RequestMapper;
-import com.carsharing.service.mapper.ResponseMapper;
+import com.carsharing.service.mapper.DtoMapper;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,21 +26,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rentals")
 public class RentalController {
     private final RentalService rentalService;
-    private final RequestMapper<RentalRequestDto, Rental> requestMapper;
-    private final ResponseMapper<RentalResponseDto, Rental> responseMapper;
+    private final DtoMapper<Rental, RentalRequestDto, RentalResponseDto> dtoMapper;
     private final CarService carService;
     private final NotificationService notificationService;
 
     @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto requestDto) {
-        Rental rental = requestMapper.toModel(requestDto);
+        Rental rental = dtoMapper.toModel(requestDto);
         Car car = rental.getCar();
         rental.setActive(true);
         if (car.getInventory() > 0) {
             rentalService.save(rental);
             notificationService.sendNotificationAboutPossibleRental(rental);
             carService.inventoryDecrease(car);
-            return responseMapper.fromModel(rental);
+            return dtoMapper.toDto(rental);
         }
         notificationService.sendNotificationAboutImpossibleRental(rental);
         return new RentalResponseDto();
@@ -49,7 +47,7 @@ public class RentalController {
 
     @GetMapping("/{id}")
     public RentalResponseDto findById(@PathVariable Long id) {
-        return responseMapper.fromModel(rentalService.get(id));
+        return dtoMapper.toDto(rentalService.get(id));
     }
 
     @GetMapping("/user_id={id}")
@@ -57,7 +55,7 @@ public class RentalController {
                                                 @RequestParam boolean isActive) {
         return rentalService.getByUserId(id, isActive)
                 .stream()
-                .map(responseMapper::fromModel)
+                .map(dtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -71,6 +69,6 @@ public class RentalController {
         rental.setActualReturnDate(actualTime);
         rental.setActive(false);
         rentalService.save(rental);
-        return responseMapper.fromModel(rental);
+        return dtoMapper.toDto(rental);
     }
 }

@@ -8,5 +8,4 @@ public class UserRequestDto {
     private String firstName;
     private String secondName;
     private String password;
-    private String role;
 }

@@ -12,4 +12,3 @@ CREATE TABLE IF NOT EXISTS `rentals` (
                            CONSTRAINT `FKb3vpbdnk78p1epicm7a7urvfh` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`),
                            CONSTRAINT `FKtnhd1objf2mlb6ag6k726u269` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 );
-

@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User login(String email, String password) {
-        User user = userService.findByEmail(email).orElseThrow();
+        User user = userService.findByEmail(email);
         if (user.getPassword().equals(password)) {
             return user;
         } else {

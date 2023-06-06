@@ -6,7 +6,7 @@ import com.carsharing.dto.response.UserResponseDto;
 import com.carsharing.model.User;
 import com.carsharing.security.jwt.JwtTokenProvider;
 import com.carsharing.service.AuthenticationService;
-import com.carsharing.service.mapper.UserMapper;
+import com.carsharing.service.mapper.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
-    private final UserMapper userDtoMapper;
+    private final DtoMapper<User, UserRequestDto, UserResponseDto> dtoMapper;
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/register")
     private UserResponseDto register(@RequestBody UserRequestDto requestDto) {
-        return userDtoMapper.fromModel(
-                authenticationService.register(userDtoMapper.toModel(requestDto)));
+        return dtoMapper.toDto(
+                authenticationService.register(dtoMapper.toModel(requestDto)));
     }
 
     @PostMapping("/login")

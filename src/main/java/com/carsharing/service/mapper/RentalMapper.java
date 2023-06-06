@@ -5,20 +5,14 @@ import com.carsharing.dto.response.RentalResponseDto;
 import com.carsharing.model.Rental;
 import com.carsharing.service.CarService;
 import com.carsharing.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@AllArgsConstructor
 @Component
-public class RentalMapper implements RequestMapper<RentalRequestDto, Rental>,
-        ResponseMapper<RentalResponseDto, Rental> {
+public class RentalMapper implements DtoMapper<Rental, RentalRequestDto, RentalResponseDto> {
     private final CarService carService;
     private final UserService userService;
-
-    @Autowired
-    public RentalMapper(CarService carService, UserService userService) {
-        this.carService = carService;
-        this.userService = userService;
-    }
 
     @Override
     public Rental toModel(RentalRequestDto dto) {
@@ -31,7 +25,7 @@ public class RentalMapper implements RequestMapper<RentalRequestDto, Rental>,
     }
 
     @Override
-    public RentalResponseDto fromModel(Rental model) {
+    public RentalResponseDto toDto(Rental model) {
         RentalResponseDto rentalResponseDto = new RentalResponseDto();
         rentalResponseDto.setId(model.getId());
         rentalResponseDto.setCarId(model.getCar().getId());

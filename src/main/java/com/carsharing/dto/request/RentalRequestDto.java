@@ -1,12 +1,12 @@
 package com.carsharing.dto.request;
 
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.Data;
 
 @Data
 public class RentalRequestDto {
-    private Date rentalDate;
-    private Date returnDate;
+    private LocalDate rentalDate;
+    private LocalDate returnDate;
     private Long carId;
     private Long userId;
 }

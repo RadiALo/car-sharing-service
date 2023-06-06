@@ -25,9 +25,14 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public List<Rental> getByUserId(Long userId, boolean isActive) {
-        if (isActive == true) {
+        if (isActive) {
             return rentalRepository.findRentalByActiveIsTrueAndUserId(userId);
         }
         return rentalRepository.findRentalByUserId(userId);
+    }
+
+    @Override
+    public List<Rental> findAll() {
+        return rentalRepository.findAll();
     }
 }

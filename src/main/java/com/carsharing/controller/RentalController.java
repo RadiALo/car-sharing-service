@@ -9,7 +9,7 @@ import com.carsharing.service.NotificationService;
 import com.carsharing.service.RentalService;
 import com.carsharing.service.mapper.RequestMapper;
 import com.carsharing.service.mapper.ResponseMapper;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +36,15 @@ public class RentalController {
     public RentalResponseDto add(@RequestBody RentalRequestDto requestDto) {
         Rental rental = requestMapper.toModel(requestDto);
         Car car = rental.getCar();
-        carService.inventoryDecrease(car);
         rental.setActive(true);
-        rentalService.save(rental);
-        notificationService.sendNotification(rental);
-        return responseMapper.fromModel(rental);
+        if (car.getInventory() > 0) {
+            rentalService.save(rental);
+            notificationService.sendNotificationAboutPossibleRental(rental);
+            carService.inventoryDecrease(car);
+            return responseMapper.fromModel(rental);
+        }
+        notificationService.sendNotificationAboutImpossibleRental(rental);
+        return new RentalResponseDto();
     }
 
     @GetMapping("/{id}")
@@ -60,7 +64,7 @@ public class RentalController {
     @PostMapping("/{id}/return")
     public RentalResponseDto setActualReturnDate(
             @PathVariable Long id,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date actualTime) {
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate actualTime) {
         Rental rental = rentalService.get(id);
         Car car = rental.getCar();
         carService.inventoryIncrease(car);

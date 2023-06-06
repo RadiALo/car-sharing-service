@@ -1,14 +1,14 @@
 package com.carsharing.dto.response;
 
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.Data;
 
 @Data
 public class RentalResponseDto {
     private Long id;
-    private Date rentalDate;
-    private Date returnDate;
-    private Date actualReturnDate;
+    private LocalDate rentalDate;
+    private LocalDate returnDate;
+    private LocalDate actualReturnDate;
     private Long carId;
     private Long userId;
     private boolean active;

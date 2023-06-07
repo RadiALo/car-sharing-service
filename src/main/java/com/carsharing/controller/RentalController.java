@@ -8,6 +8,12 @@ import com.carsharing.service.CarService;
 import com.carsharing.service.NotificationService;
 import com.carsharing.service.RentalService;
 import com.carsharing.service.mapper.DtoMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +22,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +36,12 @@ public class RentalController {
     private final NotificationService notificationService;
 
     @PostMapping
-    public RentalResponseDto add(@RequestBody RentalRequestDto requestDto) {
+    @Operation(summary = "Create a new rental")
+    public RentalResponseDto add(
+            @RequestBody(description = "Rental to add to service", required = true,
+            content = @Content(schema = @Schema(implementation =
+                    RentalRequestDto.class)))
+            @Valid RentalRequestDto requestDto) {
         Rental rental = dtoMapper.toModel(requestDto);
         Car car = rental.getCar();
         rental.setActive(true);
@@ -46,13 +56,19 @@ public class RentalController {
     }
 
     @GetMapping("/{id}")
-    public RentalResponseDto findById(@PathVariable Long id) {
+    @Operation(summary = "Get rental by Id")
+    public RentalResponseDto findById(@Parameter(description = "id of created rental")
+                                          @PathVariable Long id) {
         return dtoMapper.toDto(rentalService.get(id));
     }
 
     @GetMapping("/user_id={id}")
-    public List<RentalResponseDto> findByUserId(@PathVariable Long id,
-                                                @RequestParam boolean isActive) {
+    @Operation(summary = "Find rentals by User Id")
+    public List<RentalResponseDto> findByUserId(
+            @Parameter(description = "id of user to find all rentals")
+            @PathVariable Long id,
+            @Parameter(description = "Status of rental", required = true)
+            @RequestParam boolean isActive) {
         return rentalService.getByUserId(id, isActive)
                 .stream()
                 .map(dtoMapper::toDto)
@@ -60,8 +76,11 @@ public class RentalController {
     }
 
     @PostMapping("/{id}/return")
+    @Operation(summary = "Set the rental return date")
     public RentalResponseDto setActualReturnDate(
+            @Parameter(description = "id of rental")
             @PathVariable Long id,
+            @Parameter(description = "Write return date", required = true)
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate actualTime) {
         Rental rental = rentalService.get(id);
         Car car = rental.getCar();

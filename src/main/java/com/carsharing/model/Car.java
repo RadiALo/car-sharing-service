@@ -27,5 +27,13 @@ public class Car {
     private int inventory;
     @Column(name = "daily_fee")
     private BigDecimal dailyFee;
+
+    public enum CarType {
+        SEDAN,
+        SUV,
+        HATCHBACK,
+        UNIVERSAL;
+    }
+
 }
 

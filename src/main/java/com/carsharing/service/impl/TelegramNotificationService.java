@@ -1,6 +1,7 @@
 package com.carsharing.service.impl;
 
 import com.carsharing.bot.CarSharingBot;
+import com.carsharing.exception.NotificationException;
 import com.carsharing.model.Rental;
 import com.carsharing.model.UserChat;
 import com.carsharing.service.NotificationService;
@@ -36,7 +37,9 @@ public class TelegramNotificationService implements NotificationService {
             try {
                 carSharingBot.execute(sendMessage);
             } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
+                throw new NotificationException("Can`t send notification about possible rental "
+                        + "to user with chat id: "
+                        + userChat.get().getChatId(), e);
             }
         }
     }
@@ -54,7 +57,9 @@ public class TelegramNotificationService implements NotificationService {
             try {
                 carSharingBot.execute(sendMessage);
             } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
+                throw new NotificationException("Can`t send notification about impossible rental "
+                        + "to user with chat id: "
+                        + userChat.get().getChatId(), e);
             }
         }
     }
@@ -76,7 +81,9 @@ public class TelegramNotificationService implements NotificationService {
                 try {
                     carSharingBot.execute(sendMessage);
                 } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
+                    throw new NotificationException("Can`t send notification about failed deadline "
+                            + "to user with chat id: "
+                            + userChat.get().getChatId(), e);
                 }
             }
         }

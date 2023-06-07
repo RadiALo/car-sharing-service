@@ -32,7 +32,8 @@ public class PaymentController {
     private final DtoMapper<Payment, PaymentRequestDto, PaymentResponseDto> dtoMapper;
 
     @PostMapping
-    public PaymentResponseDto createStripeSession(@RequestBody PaymentRequestDto paymentRequestDto) {
+    public PaymentResponseDto createStripeSession(@RequestBody
+                                                      PaymentRequestDto paymentRequestDto) {
         SessionCreateParams params = stripeService.createPaymentSession(
                 paymentRequestDto.getRentalId(), paymentRequestDto.getType());
         try {

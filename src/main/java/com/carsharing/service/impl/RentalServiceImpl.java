@@ -1,6 +1,6 @@
 package com.carsharing.service.impl;
 
-import com.carsharing.exception.RentalIdException;
+import com.carsharing.exception.NoSuchRentalIdException;
 import com.carsharing.model.Rental;
 import com.carsharing.repository.RentalRepository;
 import com.carsharing.service.RentalService;
@@ -21,7 +21,7 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public Rental get(Long id) {
         return rentalRepository.findById(id).orElseThrow(() ->
-                new RentalIdException("Can`t find rental by id:" + id));
+                new NoSuchRentalIdException("Can`t find rental by id:" + id));
     }
 
     @Override

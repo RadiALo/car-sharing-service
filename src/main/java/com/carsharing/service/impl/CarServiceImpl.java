@@ -1,7 +1,7 @@
 package com.carsharing.service.impl;
 
-import com.carsharing.exception.CarIdException;
 import com.carsharing.exception.EmptyCarInventoryException;
+import com.carsharing.exception.NoSuchCarIdException;
 import com.carsharing.model.Car;
 import com.carsharing.repository.CarRepository;
 import com.carsharing.service.CarService;
@@ -22,7 +22,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car findById(Long id) {
         return carRepository.findById(id).orElseThrow(() ->
-                new CarIdException("Can't find car by such id " + id));
+                new NoSuchCarIdException("Can't find car by such id " + id));
     }
 
     @Override

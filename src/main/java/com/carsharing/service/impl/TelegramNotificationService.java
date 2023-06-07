@@ -2,12 +2,10 @@ package com.carsharing.service.impl;
 
 import com.carsharing.bot.CarSharingBot;
 import com.carsharing.model.Rental;
-import com.carsharing.model.User;
 import com.carsharing.model.UserChat;
 import com.carsharing.service.NotificationService;
 import com.carsharing.service.RentalService;
 import com.carsharing.service.UserChatService;
-import com.carsharing.service.UserService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +47,8 @@ public class TelegramNotificationService implements NotificationService {
         Optional<UserChat> userChat = userChatService.findByUser(rental.getUser());
         if (userChat.isPresent()) {
             sendMessage.setChatId(String.valueOf(userChat.get().getChatId()));
-            String message = String.format("Sorry! All car of this model: %s has already occupied.\n"
+            String message = String.format("Sorry! All car of this model: "
+                    + "%s has already occupied.\n"
                     + "Please select free car.", rental.getCar().getModel());
             sendMessage.setText(message);
             try {
@@ -69,10 +68,9 @@ public class TelegramNotificationService implements NotificationService {
                 Optional<UserChat> userChat = userChatService.findByUser(rental.getUser());
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(String.valueOf(userChat.get().getChatId()));
-                String message = String.format("""
-                                Hi! Your rental date is failed
-                                rental date: %s
-                                today's date: %s""",
+                String message = String.format("Hi! Your rental date is failed "
+                                + "rental date: %s "
+                                + "today's date: %s",
                         rental.getRentalDate().toString(), LocalDate.now());
                 sendMessage.setText(message);
                 try {

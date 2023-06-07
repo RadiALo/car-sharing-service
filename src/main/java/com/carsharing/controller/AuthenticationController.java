@@ -6,13 +6,13 @@ import com.carsharing.dto.response.UserResponseDto;
 import com.carsharing.model.User;
 import com.carsharing.security.jwt.JwtTokenProvider;
 import com.carsharing.service.AuthenticationService;
-import com.carsharing.service.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
+import com.carsharing.service.mapper.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
-    private final UserMapper userDtoMapper;
+    private final DtoMapper<User, UserRequestDto, UserResponseDto> dtoMapper;
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/register")
@@ -31,8 +31,8 @@ public class AuthenticationController {
             @RequestBody(description = "User to register.", required = true,
             content = @Content(schema=@Schema(implementation =
                     UserRequestDto.class))) @Valid UserRequestDto requestDto) {
-        return userDtoMapper.fromModel(
-                authenticationService.register(userDtoMapper.toModel(requestDto)));
+        return dtoMapper.toDto(
+                authenticationService.register(dtoMapper.toModel(requestDto)));
     }
 
     @PostMapping("/login")

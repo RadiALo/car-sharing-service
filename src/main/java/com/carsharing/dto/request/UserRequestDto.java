@@ -16,5 +16,4 @@ public class UserRequestDto {
     @NotEmpty(message = "This field can`t be empty")
     @Size(min = 8, max = 20)
     private String password;
-    private String role;
 }

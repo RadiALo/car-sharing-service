@@ -6,8 +6,7 @@ import com.carsharing.model.Car;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CarMapper implements RequestMapper<CarRequestDto, Car>,
-        ResponseMapper<CarResponseDto, Car> {
+public class CarMapper implements DtoMapper<Car, CarRequestDto, CarResponseDto> {
     @Override
     public Car toModel(CarRequestDto dto) {
         Car car = new Car();
@@ -20,7 +19,7 @@ public class CarMapper implements RequestMapper<CarRequestDto, Car>,
     }
 
     @Override
-    public CarResponseDto fromModel(Car model) {
+    public CarResponseDto toDto(Car model) {
         CarResponseDto carResponseDto = new CarResponseDto();
         carResponseDto.setId(model.getId());
         carResponseDto.setModel(model.getModel());

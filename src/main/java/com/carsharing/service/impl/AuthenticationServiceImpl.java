@@ -1,6 +1,6 @@
 package com.carsharing.service.impl;
 
-import com.carsharing.model.Role;
+import com.carsharing.exception.AuthenticationException;
 import com.carsharing.model.User;
 import com.carsharing.service.AuthenticationService;
 import com.carsharing.service.UserService;
@@ -14,7 +14,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User register(User user) {
-        user.setRole(Role.CUSTOMER);
+        user.setRole(User.Role.CUSTOMER);
         userService.save(user);
         return user;
     }
@@ -25,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (user.getPassword().equals(password)) {
             return user;
         } else {
-            throw new RuntimeException();
+            throw new AuthenticationException("Wrong email or password!");
         }
     }
 }

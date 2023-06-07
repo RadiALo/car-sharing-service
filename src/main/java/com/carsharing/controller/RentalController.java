@@ -50,7 +50,7 @@ public class RentalController {
         return dtoMapper.toDto(rentalService.get(id));
     }
 
-    @GetMapping("/user_id={id}")
+    @GetMapping("/user/{id}")
     public List<RentalResponseDto> findByUserId(@PathVariable Long id,
                                                 @RequestParam boolean isActive) {
         return rentalService.getByUserId(id, isActive)

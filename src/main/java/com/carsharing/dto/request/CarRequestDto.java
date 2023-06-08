@@ -1,6 +1,6 @@
 package com.carsharing.dto.request;
 
-import com.carsharing.model.CarType;
+import com.carsharing.model.Car;
 import java.math.BigDecimal;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
@@ -14,7 +14,7 @@ public class CarRequestDto {
     @NotEmpty(message = "This field can`t be empty")
     private String brand;
     @NotEmpty(message = "This field can`t be empty")
-    private CarType type;
+    private Car.CarType type;
     @NotEmpty(message = "This field can`t be empty")
     @PositiveOrZero
     private int inventory;

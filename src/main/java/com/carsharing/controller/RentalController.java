@@ -62,7 +62,7 @@ public class RentalController {
         return dtoMapper.toDto(rentalService.get(id));
     }
 
-    @GetMapping("/user_id={id}")
+    @GetMapping("/user/{id}")
     @Operation(summary = "Find rentals by User Id")
     public List<RentalResponseDto> findByUserId(
             @Parameter(description = "id of user to find all rentals")

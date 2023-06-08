@@ -2,7 +2,6 @@ package com.carsharing.controller;
 
 import com.carsharing.dto.request.UserRequestDto;
 import com.carsharing.dto.response.UserResponseDto;
-import com.carsharing.model.Role;
 import com.carsharing.model.User;
 import com.carsharing.service.UserService;
 import com.carsharing.service.mapper.DtoMapper;
@@ -35,7 +34,7 @@ public class UserController {
             @PathVariable Long id,
             @Parameter(description = "User role: Customer or Manager", required = true,
                     schema = @Schema(type = "string", defaultValue = "CUSTOMER"))
-            @RequestBody Role role) {
+            @RequestBody User.Role role) {
         User user = userService.get(id);
         user.setRole(role);
         userService.update(user);

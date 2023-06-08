@@ -40,16 +40,16 @@ public class UserController {
         userService.update(user);
         return dtoMapper.toDto(user);
     }
-
-    @GetMapping("/users/me")
+  
+    @GetMapping("/me")
     @Operation(summary = "Get user by Authentication information")
     private UserResponseDto getMe(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         User user = userService.findByEmail(details.getUsername());
         return dtoMapper.toDto(user);
     }
-
-    @PutMapping("/users/me")
+  
+    @PutMapping("/me")
     @Operation(summary = "Update user information")
     private UserResponseDto updateMe(
             Authentication auth,

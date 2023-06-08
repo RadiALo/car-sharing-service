@@ -14,7 +14,7 @@ public class CarRequestDto {
     @NotEmpty(message = "This field can`t be empty")
     private String brand;
     @NotEmpty(message = "This field can`t be empty")
-    private Car.CarType type;
+    private Car.Type type;
     @NotEmpty(message = "This field can`t be empty")
     @PositiveOrZero
     private int inventory;

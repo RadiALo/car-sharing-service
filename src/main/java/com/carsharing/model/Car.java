@@ -22,13 +22,13 @@ public class Car {
     private String model;
     private String brand;
     @Enumerated(EnumType.STRING)
-    private CarType type;
+    private Type type;
     @Positive
     private int inventory;
     @Column(name = "daily_fee")
     private BigDecimal dailyFee;
 
-    public enum CarType {
+    public enum Type {
         SEDAN,
         SUV,
         HATCHBACK,

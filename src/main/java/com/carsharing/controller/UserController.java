@@ -31,14 +31,14 @@ public class UserController {
         return dtoMapper.toDto(user);
     }
 
-    @GetMapping("/users/me")
+    @GetMapping("/me")
     private UserResponseDto getMe(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         User user = userService.findByEmail(details.getUsername());
         return dtoMapper.toDto(user);
     }
 
-    @PutMapping("/users/me")
+    @PutMapping("/me")
     private UserResponseDto updateMe(Authentication auth,
                                      @RequestBody UserRequestDto userRequestDto) {
         UserDetails details = (UserDetails) auth.getPrincipal();

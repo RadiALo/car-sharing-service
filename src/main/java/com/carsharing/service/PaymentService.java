@@ -1,6 +1,7 @@
 package com.carsharing.service;
 
 import com.carsharing.model.Payment;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PaymentService {
@@ -13,4 +14,6 @@ public interface PaymentService {
     boolean isSessionPaid(String sessionId);
 
     List<Payment> findByUserId(Long id);
+
+    BigDecimal calculateAmountToPay(Long rentalId, Payment.Type type);
 }

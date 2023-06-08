@@ -1,15 +1,19 @@
 package com.carsharing.service.impl;
 
 import com.carsharing.model.Payment;
+import com.carsharing.service.PaymentService;
 import com.carsharing.service.StripeService;
 import com.stripe.Stripe;
 import com.stripe.param.checkout.SessionCreateParams;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class StripeServiceImpl implements StripeService {
     private static final String PAYMENT_URL = "http://localhost:6868/payments";
+    private final PaymentService paymentService;
     @Value("${STRIPE_SECRET_KEY}")
     private String stripeSecretKey;
 
@@ -36,13 +40,14 @@ public class StripeServiceImpl implements StripeService {
                                                         .build()
                                         )
                                         .setUnitAmount(
-                                                250L)
+                                                paymentService.calculateAmountToPay(
+                                                        rentalId, type).longValue()
+                                        )
                                         .build()
                         )
                         .setQuantity(1L)
                         .build()
         );
-        SessionCreateParams params = builder.build();
-        return params;
+        return builder.build();
     }
 }

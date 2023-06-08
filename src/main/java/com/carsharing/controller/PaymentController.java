@@ -9,6 +9,12 @@ import com.carsharing.service.mapper.DtoMapper;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,8 +37,12 @@ public class PaymentController {
     private final DtoMapper<Payment, PaymentRequestDto, PaymentResponseDto> dtoMapper;
 
     @PostMapping
-    public PaymentResponseDto createStripeSession(@RequestBody
-                                                      PaymentRequestDto paymentRequestDto) {
+    @Operation(summary = "Create a payment")
+    public PaymentResponseDto createStripeSession(
+            @RequestBody(description = "Payment to add to database", required = true,
+            content = @Content(schema = @Schema(implementation =
+                    PaymentRequestDto.class)))
+            @Valid PaymentRequestDto paymentRequestDto) {
         SessionCreateParams params = stripeService.createPaymentSession(
                 paymentRequestDto.getRentalId(), paymentRequestDto.getType());
         try {
@@ -55,7 +64,9 @@ public class PaymentController {
     }
 
     @GetMapping("/success")
-    public String success(@RequestParam("session_id") String sessionId) {
+    @Operation(summary = "Status of the payment")
+    public String success(@RequestParam("session_id")
+                              @Parameter(description = "Session id") String sessionId) {
         Payment payment = paymentService.findBySessionId(sessionId);
         if (paymentService.isSessionPaid(sessionId)) {
             return "invalid payment";
@@ -66,12 +77,16 @@ public class PaymentController {
     }
 
     @GetMapping("/cancel")
+    @Operation(summary = "Payment was canceled status page")
     public String cancelPayment() {
         return "Payment was canceled! But this payment page active for 24 hours.";
     }
 
     @GetMapping("/{id}")
-    public List<PaymentResponseDto> getUserPayments(@PathVariable Long id) {
+    @Operation(summary = "Find all user payments")
+    public List<PaymentResponseDto> getUserPayments(
+            @Parameter(description = "id of user to find all payments")
+            @PathVariable Long id) {
         return paymentService.findByUserId(id).stream()
                 .map(dtoMapper::toDto)
                 .collect(Collectors.toList());

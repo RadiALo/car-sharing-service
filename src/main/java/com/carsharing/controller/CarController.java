@@ -4,13 +4,13 @@ import com.carsharing.dto.request.CarRequestDto;
 import com.carsharing.dto.response.CarResponseDto;
 import com.carsharing.model.Car;
 import com.carsharing.service.CarService;
+import com.carsharing.service.mapper.DtoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
-import com.carsharing.service.mapper.DtoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class CarController {
     @Operation(summary = "Create a new car for rental service")
     public CarResponseDto add(
             @RequestBody(description = "Car to add to rental service", required = true,
-                    content = @Content(schema=@Schema(implementation =
+                    content = @Content(schema = @Schema(implementation =
                             CarRequestDto.class)))
             @Valid CarRequestDto carRequestDto) {
         return dtoMapper
@@ -62,7 +62,7 @@ public class CarController {
             @Parameter(description = "id of car to be updated")
             @PathVariable Long id,
             @RequestBody(description = "New car information to update", required = true,
-                    content = @Content(schema=@Schema(implementation =
+                    content = @Content(schema = @Schema(implementation =
                             CarRequestDto.class)))
             @Valid CarRequestDto carRequestDto) {
         Car car = dtoMapper.toModel(carRequestDto);

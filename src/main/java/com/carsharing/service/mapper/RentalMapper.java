@@ -29,7 +29,7 @@ public class RentalMapper implements DtoMapper<Rental, RentalRequestDto, RentalR
         RentalResponseDto rentalResponseDto = new RentalResponseDto();
         rentalResponseDto.setId(model.getId());
         rentalResponseDto.setCarId(model.getCar().getId());
-        rentalResponseDto.setUserId(model.getCar().getId());
+        rentalResponseDto.setUserId(model.getUser().getId());
         rentalResponseDto.setRentalDate(model.getRentalDate());
         rentalResponseDto.setReturnDate(model.getReturnDate());
         rentalResponseDto.setActualReturnDate(model.getActualReturnDate());

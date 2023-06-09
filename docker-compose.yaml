@@ -29,5 +29,7 @@ services:
         "spring.jpa.hibernate.ddl-auto" : "validate",
         "spring.liquibase.enabled" : "true",
         "bot.username" : "$BOT_USER_NAME",
-        "bot.token" : "$BOT_TOKEN"
+        "bot.token" : "$BOT_TOKEN",
+        "spring.jackson.serialization.fail-on-empty-beans" : "false",
+        "stripe.secret.key" : "STRIPE_SECRET_KEY"
       }'

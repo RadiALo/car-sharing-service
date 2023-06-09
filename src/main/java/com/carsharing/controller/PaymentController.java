@@ -16,8 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -52,13 +50,13 @@ public class PaymentController {
             BigDecimal amountToPay = BigDecimal.valueOf(session.getAmountTotal());
             PaymentRequestDto requestDto = new PaymentRequestDto();
             requestDto.setSessionId(sessionId);
-            requestDto.setSessionUrl(new URL(sessionUrl));
+            requestDto.setSessionUrl(sessionUrl);
             requestDto.setType(paymentRequestDto.getType());
             requestDto.setStatus(Payment.Status.PENDING);
-            requestDto.setAmount(amountToPay.divide(BigDecimal.valueOf(100)));
+            requestDto.setAmount(amountToPay);
             requestDto.setRentalId(paymentRequestDto.getRentalId());
             return dtoMapper.toDto(paymentService.save(dtoMapper.toModel(requestDto)));
-        } catch (StripeException | MalformedURLException e) {
+        } catch (StripeException e) {
             throw new RuntimeException("Can't get payment page.", e);
         }
     }

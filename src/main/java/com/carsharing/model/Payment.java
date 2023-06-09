@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.net.URL;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,8 +33,8 @@ public class Payment {
     @JoinColumn(name = "rental_id")
     @EqualsAndHashCode.Exclude
     private Rental rental;
-    @Column(name = "session_url")
-    private URL sessionUrl;
+    @Column(name = "session_url", length = Integer.MAX_VALUE)
+    private String sessionUrl;
     @Column(name = "session_id")
     private String sessionId;
     private BigDecimal amount;

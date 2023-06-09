@@ -3,14 +3,10 @@ package com.carsharing.service.mapper;
 import com.carsharing.dto.request.UserRequestDto;
 import com.carsharing.dto.response.UserResponseDto;
 import com.carsharing.model.User;
-import com.carsharing.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
 @Component
 public class UserMapper implements DtoMapper<User, UserRequestDto, UserResponseDto> {
-    private final UserService userService;
 
     @Override
     public User toModel(UserRequestDto dto) {

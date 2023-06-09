@@ -11,10 +11,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +27,8 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @Operation(summary = "Register a new user")
-    private UserResponseDto register(
-            @RequestBody(description = "User to register.", required = true,
+    public UserResponseDto register(
+            @Parameter(description = "User to register.", required = true,
                     content = @Content(schema =
                     @Schema(implementation = UserRequestDto.class, type = "String",
                             example = "{ \n"
@@ -37,14 +37,14 @@ public class AuthenticationController {
                             + "    \"secondName\":\"Kevinson\", \n"
                             + "    \"password\":\"12345678\", \n"
                             + "}")))
-            @Valid UserRequestDto requestDto) {
+            @RequestBody @Valid UserRequestDto requestDto) {
         return dtoMapper.toDto(
                 authenticationService.register(dtoMapper.toModel(requestDto)));
     }
 
     @PostMapping("/login")
     @Operation(summary = "Login in system")
-    private TokenResponseDto login(
+    public TokenResponseDto login(
             @Parameter(description = "Write your login", required = true,
             schema = @Schema(defaultValue = "{\"email\":\"hannaK@gmail.com\"}"))
             @RequestParam @Valid String login,

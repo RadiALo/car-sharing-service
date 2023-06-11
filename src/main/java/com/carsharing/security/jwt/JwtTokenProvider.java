@@ -28,7 +28,7 @@ public class JwtTokenProvider {
 
     @Value("${spring.jwt.token.secret-key:secret}")
     private String secretKey;
-    @Value("${spring.jwt.token.expire-length:36000}")
+    @Value("${spring.jwt.token.expire-length:360000000}")
     private long validityInMilliseconds;
     private final UserDetailsService userDetailsService;
 
@@ -58,7 +58,7 @@ public class JwtTokenProvider {
 
     private String getUsername(String token) {
         return Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJwt(token).getBody().getSubject();
+                .parseClaimsJws(token).getBody().getSubject();
     }
 
     public String resolveToken(HttpServletRequest req) {

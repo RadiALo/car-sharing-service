@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,10 +32,10 @@ public class CarController {
     @PostMapping
     @Operation(summary = "Create a new car for rental service")
     public CarResponseDto add(
-            @RequestBody(description = "Car to add to rental service", required = true,
+            @Parameter(description = "Car to add to rental service", required = true,
                     content = @Content(schema = @Schema(implementation =
                             CarRequestDto.class)))
-            @Valid CarRequestDto carRequestDto) {
+            @RequestBody @Valid CarRequestDto carRequestDto) {
         return dtoMapper
                 .toDto(carService.save(dtoMapper.toModel(carRequestDto)));
     }
@@ -61,10 +61,10 @@ public class CarController {
     public CarResponseDto update(
             @Parameter(description = "id of car to be updated")
             @PathVariable Long id,
-            @RequestBody(description = "New car information to update", required = true,
+            @Parameter(description = "New car information to update", required = true,
                     content = @Content(schema = @Schema(implementation =
                             CarRequestDto.class)))
-            @Valid CarRequestDto carRequestDto) {
+            @RequestBody @Valid CarRequestDto carRequestDto) {
         Car car = dtoMapper.toModel(carRequestDto);
         car.setId(id);
         carService.save(car);

@@ -64,7 +64,7 @@ public class TelegramNotificationService implements NotificationService {
         }
     }
 
-    @Scheduled(cron = "*/30 * * * * ?")
+    @Scheduled(cron = "0 0 9,18 */1 * ?")
     @Override
     public void sentNotificationAboutFailedDeadLine() {
         List<Rental> rentals = rentalService.findAll();

@@ -38,9 +38,8 @@ public class SecurityConfig {
                                         "/login",
                                         "/register",
                                         "/swagger-ui/**",
-                                        "payments/success",
-                                        "/payments/cancel",
-                                        "/cars"
+                                        "/payments/success",
+                                        "/payments/cancel"
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.POST,
                                         "/cars",
@@ -50,11 +49,11 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,
                                         "/rentals",
                                         "/payments").hasAnyRole("CUSTOMER", "MANAGER")
+                                .requestMatchers(HttpMethod.GET, "/cars").permitAll()
                                 .requestMatchers(HttpMethod.GET,
                                         "users/me",
                                         "/cars/{id}").hasAnyRole("CUSTOMER", "MANAGER")
                                 .requestMatchers(HttpMethod.GET,
-                                        "/rentals",
                                         "/rentals/{id}",
                                         "/rentals/user/{id}").hasRole("MANAGER")
                                 .requestMatchers(HttpMethod.PUT,

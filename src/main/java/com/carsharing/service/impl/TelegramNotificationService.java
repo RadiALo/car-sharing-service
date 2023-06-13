@@ -88,4 +88,40 @@ public class TelegramNotificationService implements NotificationService {
             }
         }
     }
+
+    @Override
+    public void sentNotificationAboutReturnedCar(Rental rental) {
+        Optional<UserChat> userChat = userChatService.findByUser(rental.getUser());
+        if (userChat.isPresent()) {
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(String.valueOf(userChat.get().getChatId()));
+            String message = "Car: " + rental.getCar().getModel() + " has been returned!";
+            sendMessage.setText(message);
+            try {
+                carSharingBot.execute(sendMessage);
+            } catch (TelegramApiException e) {
+                throw new NotificationException("Can`t send notification about returned car "
+                        + "to user with chat id: "
+                        + userChat.get().getChatId(), e);
+            }
+        }
+    }
+
+    @Override
+    public void sentNotificationAboutSuccessfulPayment(Rental rental) {
+        Optional<UserChat> userChat = userChatService.findByUser(rental.getUser());
+        if (userChat.isPresent()) {
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(String.valueOf(userChat.get().getChatId()));
+            String message = "Your payment was successful!";
+            sendMessage.setText(message);
+            try {
+                carSharingBot.execute(sendMessage);
+            } catch (TelegramApiException e) {
+                throw new NotificationException("Can`t send notification about successful payment"
+                        + " to user with chat id: "
+                        + userChat.get().getChatId(), e);
+            }
+        }
+    }
 }

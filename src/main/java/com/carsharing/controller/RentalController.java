@@ -88,6 +88,7 @@ public class RentalController {
         rental.setActualReturnDate(actualTime);
         rental.setActive(false);
         rentalService.save(rental);
+        notificationService.sentNotificationAboutReturnedCar(rental);
         return dtoMapper.toDto(rental);
     }
 }

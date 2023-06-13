@@ -8,4 +8,8 @@ public interface NotificationService {
     void sendNotificationAboutImpossibleRental(Rental rental);
 
     void sentNotificationAboutFailedDeadLine();
+
+    void sentNotificationAboutReturnedCar(Rental rental);
+
+    void sentNotificationAboutSuccessfulPayment(Rental rental);
 }

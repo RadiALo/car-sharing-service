@@ -32,7 +32,7 @@ public class Car {
         SEDAN,
         SUV,
         HATCHBACK,
-        UNIVERSAL;
+        UNIVERSAL
     }
 
 }

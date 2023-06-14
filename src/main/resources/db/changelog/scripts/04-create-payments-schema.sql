@@ -1,4 +1,4 @@
-CREATE TABLE `payments` (
+CREATE TABLE IF NOT EXISTS `payments` (
                             `amount` decimal(38,2) DEFAULT NULL,
                             `id` bigint NOT NULL AUTO_INCREMENT,
                             `rental_id` bigint DEFAULT NULL,

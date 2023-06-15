@@ -26,8 +26,10 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "ENUM('PENDING', 'PAID')")
     private Status status;
     @Enumerated(EnumType.STRING)
+    @Column(name = "type", columnDefinition = "ENUM('PAYMENT', 'FINE')")
     private Type type;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id")

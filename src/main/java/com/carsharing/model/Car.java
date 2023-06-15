@@ -22,6 +22,8 @@ public class Car {
     private String model;
     private String brand;
     @Enumerated(EnumType.STRING)
+    @Column(name = "type",
+            columnDefinition = "ENUM('SEDAN', 'SUV', 'HATCHBACK', 'UNIVERSAL')")
     private Type type;
     @Positive
     private int inventory;
@@ -32,7 +34,7 @@ public class Car {
         SEDAN,
         SUV,
         HATCHBACK,
-        UNIVERSAL;
+        UNIVERSAL
     }
 
 }

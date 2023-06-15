@@ -34,14 +34,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        "/health",
+                                        "/health-check",
                                         "/login",
                                         "/register",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",
                                         "/v3/api-docs/**",
                                         "/payments/success",
-                                        "/payments/cancel"
+                                        "/payments/cancel",
+                                        "/inject"
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.POST,
                                         "/cars",

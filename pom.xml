@@ -88,7 +88,6 @@
             <artifactId>stripe-java</artifactId>
             <version>22.18.0</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>

@@ -18,12 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -79,20 +75,20 @@ public class RentalControllerTest {
         testRental.setRentalDate(LocalDate.now());
         testRental.setActive(true);
         testRental.setReturnDate(LocalDate.of(2023, 06, 13));
-    }
 
-    @Test
-    void findById_ok() throws Exception {
         rentalResponseDto = new RentalResponseDto();
         rentalResponseDto.setRentalDate(testRental.getRentalDate());
         rentalResponseDto.setReturnDate(testRental.getReturnDate());
         rentalResponseDto.setCarId(testRental.getCar().getId());
         rentalResponseDto.setUserId(testRental.getUser().getId());
+    }
 
+    @Test
+    void findById_ok() throws Exception {
         Mockito.when(dtoMapper.toDto(testRental)).thenReturn(rentalResponseDto);
             Mockito.when(rentalService.get(testRental.getId())).thenReturn(testRental);
-        RentalResponseDto actualResponse = rentalController.findById(testRental.getId());
-        Assertions.assertEquals(rentalResponseDto, actualResponse);
+        RentalResponseDto actualResponseDto = rentalController.findById(testRental.getId());
+        Assertions.assertEquals(rentalResponseDto, actualResponseDto);
     }
 
     @Test
@@ -101,8 +97,9 @@ public class RentalControllerTest {
         List<RentalResponseDto> responseDtoList = Arrays.asList(new RentalResponseDto(), new RentalResponseDto());
         Mockito.when(rentalService.getByUserId(testRental.getUser().getId(), testRental.isActive())).thenReturn(rentals);
         Mockito.when(dtoMapper.toDto(any(Rental.class))).thenReturn(responseDtoList.get(0), responseDtoList.get(1));
-        List<RentalResponseDto> result = rentalController.findByUserId(testRental.getUser().getId(), testRental.isActive());
-        Assertions.assertEquals(responseDtoList, result);
+        List<RentalResponseDto> actualResponseDtoList =
+                rentalController.findByUserId(testRental.getUser().getId(), testRental.isActive());
+        Assertions.assertEquals(responseDtoList, actualResponseDtoList);
     }
 
     @Test
@@ -110,15 +107,11 @@ public class RentalControllerTest {
         Rental returnedRental = new Rental();
         returnedRental.setCar(testCar);
 
-        rentalResponseDto = new RentalResponseDto();
-        rentalResponseDto.setRentalDate(testRental.getRentalDate());
-        rentalResponseDto.setReturnDate(testRental.getReturnDate());
-        rentalResponseDto.setCarId(testRental.getCar().getId());
-        rentalResponseDto.setUserId(testRental.getUser().getId());
-
         Mockito.when(rentalService.get(testRental.getId())).thenReturn(returnedRental);
         Mockito.when(dtoMapper.toDto(returnedRental)).thenReturn(rentalResponseDto);
-        RentalResponseDto result = rentalController.setActualReturnDate(testRental.getId(), LocalDate.of(2023, 06, 13));
-        Assertions.assertEquals(rentalResponseDto, result);
+        RentalResponseDto actualResponseDto =
+                rentalController.setActualReturnDate
+                        (testRental.getId(), LocalDate.of(2023, 06, 13));
+        Assertions.assertEquals(rentalResponseDto, actualResponseDto);
     }
 }

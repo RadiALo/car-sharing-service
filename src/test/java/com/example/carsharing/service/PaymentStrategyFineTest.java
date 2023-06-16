@@ -21,6 +21,9 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentStrategyFineTest {
+    private static final LocalDate DATE_OF_RENTAL = LocalDate.of(2023, 06, 13);
+    private static final LocalDate DATE_OF_RETURN = LocalDate.of(2023, 06, 14);
+    private static final LocalDate DATE_OF_ACTUAL_RETURN = LocalDate.of(2023, 06, 16);
     private Rental testRental;
     private User testUser;
     private Car testCar;
@@ -54,9 +57,9 @@ public class PaymentStrategyFineTest {
         testRental.setId(1L);
         testRental.setUser(testUser);
         testRental.setCar(testCar);
-        testRental.setRentalDate(LocalDate.now());
+        testRental.setRentalDate(DATE_OF_RENTAL);
         testRental.setActive(true);
-        testRental.setReturnDate(LocalDate.of(2023, 06, 13));
+        testRental.setReturnDate(DATE_OF_RETURN);
 
         dailyFee = testRental.getCar().getDailyFee();
     }
@@ -70,9 +73,9 @@ public class PaymentStrategyFineTest {
 
     @Test
     void carReturned_ok() {
-        testRental.setActualReturnDate(LocalDate.of(2023, 06, 13));
+        testRental.setActualReturnDate(DATE_OF_ACTUAL_RETURN);
         Mockito.when(rentalService.get(any(Long.class))).thenReturn(testRental);
-        Assertions.assertEquals(BigDecimal.valueOf(-500),
+        Assertions.assertEquals(BigDecimal.valueOf(2500),
                 payment.calculateFineByType(testRental.getId()));
     }
 }

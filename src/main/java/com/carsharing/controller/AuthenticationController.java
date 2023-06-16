@@ -32,13 +32,7 @@ public class AuthenticationController {
     public UserResponseDto register(
             @Parameter(description = "User to register.", required = true,
                     content = @Content(schema =
-                    @Schema(implementation = UserRequestDto.class, type = "String",
-                            example = "{ \n"
-                            + "    \"email\":\"hannaK@gmail.com\", \n"
-                            + "    \"firstName\":\"Hanna\", \n"
-                            + "    \"secondName\":\"Kevinson\", \n"
-                            + "    \"password\":\"12345678\", \n"
-                            + "}")))
+                    @Schema(implementation = UserRequestDto.class)))
             @RequestBody @Valid UserRequestDto requestDto) {
         return dtoMapper.toDto(
                 authenticationService.register(dtoMapper.toModel(requestDto)));
@@ -48,10 +42,10 @@ public class AuthenticationController {
     @Operation(summary = "Login in system")
     public TokenResponseDto login(
             @Parameter(description = "Write your login", required = true,
-            schema = @Schema(defaultValue = "{\"email\":\"hannaK@gmail.com\"}"))
+            schema = @Schema(defaultValue = "test@gmail.com"))
             @RequestParam @Valid String login,
             @Parameter(description = "Write your password", required = true,
-            schema = @Schema(defaultValue = "{\"password\":\"12345678\"}"))
+            schema = @Schema(defaultValue = "12345678"))
             @RequestParam @Valid String password) {
         User user = authenticationService.login(login, password);
         String token = jwtTokenProvider.createToken(user.getEmail(), user.getRole().name());

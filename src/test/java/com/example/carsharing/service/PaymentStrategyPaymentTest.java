@@ -20,6 +20,11 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentStrategyPaymentTest {
+    private static final LocalDate DATE_OF_RENTAL = LocalDate.of(2023, 06, 13);
+    private static final LocalDate DATE_OF_RETURN = LocalDate.of(2023, 06, 14);
+    private static final LocalDate DATE_OF_ACTUAL_RETURN_IS_ZERO = LocalDate.of(2023, 06, 13);
+    private static final LocalDate DATE_OF_ACTUAL_RETURN_MORE_THAN_ZERO =
+            LocalDate.of(2023, 06, 15);
     private Rental testRental;
     private User testUser;
     private Car testCar;
@@ -53,9 +58,9 @@ public class PaymentStrategyPaymentTest {
         testRental.setId(1L);
         testRental.setUser(testUser);
         testRental.setCar(testCar);
-        testRental.setRentalDate(LocalDate.now());
+        testRental.setRentalDate(DATE_OF_RENTAL);
         testRental.setActive(true);
-        testRental.setReturnDate(LocalDate.of(2023, 06, 13));
+        testRental.setReturnDate(DATE_OF_RETURN);
 
         dailyFee = testRental.getCar().getDailyFee();
     }
@@ -69,7 +74,7 @@ public class PaymentStrategyPaymentTest {
 
     @Test
     void rentalDurationIsZero_ok() {
-        testRental.setActualReturnDate(LocalDate.now());
+        testRental.setActualReturnDate(DATE_OF_ACTUAL_RETURN_IS_ZERO);
         Mockito.when(rentalService.get(any(Long.class))).thenReturn(testRental);
         Assertions.assertEquals(dailyFee.multiply(BigDecimal.valueOf(100)),
                 payment.calculateFineByType(testRental.getId()));
@@ -77,9 +82,9 @@ public class PaymentStrategyPaymentTest {
 
     @Test
     void rentalDurationBiggerThanZero_ok() {
-        testRental.setActualReturnDate(LocalDate.of(2023, 06, 13));
+        testRental.setActualReturnDate(DATE_OF_ACTUAL_RETURN_MORE_THAN_ZERO);
         Mockito.when(rentalService.get(any(Long.class))).thenReturn(testRental);
-        Assertions.assertEquals(BigDecimal.valueOf(-500),
+        Assertions.assertEquals(BigDecimal.valueOf(1000),
                 payment.calculateFineByType(testRental.getId()));
     }
 }

@@ -2,6 +2,7 @@ package com.carsharing.controller;
 
 import com.carsharing.dto.request.RentalRequestDto;
 import com.carsharing.dto.response.RentalResponseDto;
+import com.carsharing.exception.ReturnedRentalException;
 import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
 import com.carsharing.service.CarService;
@@ -84,11 +85,14 @@ public class RentalController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate actualTime) {
         Rental rental = rentalService.get(id);
         Car car = rental.getCar();
-        carService.inventoryIncrease(car);
-        rental.setActualReturnDate(actualTime);
-        rental.setActive(false);
-        rentalService.save(rental);
-        notificationService.sentNotificationAboutReturnedCar(rental);
-        return dtoMapper.toDto(rental);
+        if (rental.getActualReturnDate() == null) {
+            carService.inventoryIncrease(car);
+            rental.setActualReturnDate(actualTime);
+            rental.setActive(false);
+            rentalService.save(rental);
+            notificationService.sentNotificationAboutReturnedCar(rental);
+            return dtoMapper.toDto(rental);
+        }
+        throw new ReturnedRentalException("This rental can't returned twice!");
     }
 }

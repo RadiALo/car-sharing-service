@@ -46,6 +46,9 @@ public class CarControllerTest {
     void init() {
         objectMapper = new ObjectMapper();
         mockMvc = MockMvcBuilders.standaloneSetup(carController).build();
+        testCar = new Car();
+        testCar.setInventory(5);
+        testCar.setBrand("TestBrand");
     }
 
     @Test
@@ -54,21 +57,29 @@ public class CarControllerTest {
         carRequestDto.setBrand("testBrand");
         carRequestDto.setType(Car.Type.SEDAN);
         carRequestDto.setModel("testModel");
+        carResponseDto = new CarResponseDto();
+        carResponseDto.setBrand("testBrand");
+        carResponseDto.setType(Car.Type.SEDAN);
+        carResponseDto.setModel("testModel");
+
+        Mockito.when(dtoMapper.toDto(testCar)).thenReturn(carResponseDto);
+        Mockito.when(carService.save(testCar)).thenReturn(testCar);
+        Mockito.when(dtoMapper.toModel(carRequestDto)).thenReturn(testCar);
+
+        CarResponseDto response = carController.add(carRequestDto);
+        Assertions.assertEquals(carResponseDto, response);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/cars")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(carRequestDto)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
     }
 
     @Test
     void findAllCars_ok() throws Exception {
-        testCar = new Car();
-        testCar.setId(1L);
-        testCar.setBrand("testBrand");
-        testCar.setType(Car.Type.SEDAN);
-        testCar.setModel("testModel");
-
         carResponseDto = new CarResponseDto();
         carResponseDto.setId(testCar.getId());
         carResponseDto.setBrand(testCar.getBrand());
@@ -126,6 +137,19 @@ public class CarControllerTest {
         testCar.setBrand("testBrand");
         testCar.setType(Car.Type.SEDAN);
         testCar.setModel("testModel");
+
+        carResponseDto = new CarResponseDto();
+        carResponseDto.setBrand("testBrand");
+        carResponseDto.setType(Car.Type.SEDAN);
+        carResponseDto.setModel("testModel");
+
+        Mockito.when(dtoMapper.toModel(carRequestDto)).thenReturn(testCar);
+        Mockito.when(carService.save(testCar)).thenReturn(testCar);
+        Mockito.when(dtoMapper.toDto(testCar)).thenReturn(carResponseDto);
+
+        CarResponseDto response = carController.update(testCar.getId(), carRequestDto);
+
+        Assertions.assertEquals(carResponseDto, response);
 
         Mockito.when(dtoMapper.toModel(carRequestDto)).thenReturn(testCar);
         mockMvc.perform(MockMvcRequestBuilders.put("/cars/1")

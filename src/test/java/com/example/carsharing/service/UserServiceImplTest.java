@@ -37,4 +37,10 @@ public class UserServiceImplTest {
         Assertions.assertThrows(UserNullIdException.class,
                 () -> userService.update(testUser));
     }
+
+    @Test
+    void updateUserWithNotNullId_ok() {
+        testUser.setId(1L);
+        Assertions.assertDoesNotThrow(() -> userService.update(testUser));
+    }
 }

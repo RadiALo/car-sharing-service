@@ -1,5 +1,6 @@
 package com.example.carsharing.service;
 
+import com.carsharing.exception.UserNullIdException;
 import com.carsharing.model.User;
 import com.carsharing.repository.UserRepository;
 import com.carsharing.service.impl.UserServiceImpl;
@@ -23,7 +24,7 @@ public class UserServiceImplTest {
     @BeforeEach
     void init() {
         testUser = new User();
-        testUser.setId(1L);
+        testUser.setId(null);
         testUser.setFirstName("testFirstName");
         testUser.setSecondName("testSecondName");
         testUser.setPassword("testPassword");
@@ -32,9 +33,8 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void updateSuccess_ok() {
-        testUser.setPassword("changedPassword");
-        userService.update(testUser);
-        Assertions.assertEquals("changedPassword", testUser.getPassword());
+    void updateUserWithNull_notOk() {
+        Assertions.assertThrows(UserNullIdException.class,
+                () -> userService.update(testUser));
     }
 }

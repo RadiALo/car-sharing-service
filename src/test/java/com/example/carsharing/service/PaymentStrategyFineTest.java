@@ -4,7 +4,7 @@ import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
 import com.carsharing.model.User;
 import com.carsharing.service.RentalService;
-import com.carsharing.service.impl.PaymentStrategyPayment;
+import com.carsharing.service.impl.PaymentStrategyFine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,25 +13,24 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
-public class PaymentStrategyPaymentTest {
+public class PaymentStrategyFineTest {
     private static final LocalDate DATE_OF_RENTAL = LocalDate.of(2023, 06, 13);
     private static final LocalDate DATE_OF_RETURN = LocalDate.of(2023, 06, 14);
-    private static final LocalDate DATE_OF_ACTUAL_RETURN_IS_ZERO = LocalDate.of(2023, 06, 13);
-    private static final LocalDate DATE_OF_ACTUAL_RETURN_MORE_THAN_ZERO =
-            LocalDate.of(2023, 06, 15);
+    private static final LocalDate DATE_OF_ACTUAL_RETURN = LocalDate.of(2023, 06, 16);
     private Rental testRental;
     private User testUser;
     private Car testCar;
     private BigDecimal dailyFee;
 
     @InjectMocks
-    private PaymentStrategyPayment payment;
+    private PaymentStrategyFine payment;
 
     @Mock
     private RentalService rentalService;
@@ -73,18 +72,10 @@ public class PaymentStrategyPaymentTest {
     }
 
     @Test
-    void rentalDurationIsZero_ok() {
-        testRental.setActualReturnDate(DATE_OF_ACTUAL_RETURN_IS_ZERO);
+    void carReturned_ok() {
+        testRental.setActualReturnDate(DATE_OF_ACTUAL_RETURN);
         Mockito.when(rentalService.get(any(Long.class))).thenReturn(testRental);
-        Assertions.assertEquals(dailyFee.multiply(BigDecimal.valueOf(100)),
-                payment.calculateFineByType(testRental.getId()));
-    }
-
-    @Test
-    void rentalDurationBiggerThanZero_ok() {
-        testRental.setActualReturnDate(DATE_OF_ACTUAL_RETURN_MORE_THAN_ZERO);
-        Mockito.when(rentalService.get(any(Long.class))).thenReturn(testRental);
-        Assertions.assertEquals(BigDecimal.valueOf(1000),
+        Assertions.assertEquals(BigDecimal.valueOf(2500),
                 payment.calculateFineByType(testRental.getId()));
     }
 }

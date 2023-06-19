@@ -22,7 +22,7 @@ public class PaymentStrategyFine implements PaymentStrategy {
             throw new RuntimeException("You haven't returned the car yet");
         }
         long rentalDuration =
-                ChronoUnit.DAYS.between(rental.getActualReturnDate(), rental.getRentalDate());
+                ChronoUnit.DAYS.between(rental.getRentalDate(), rental.getActualReturnDate());
         long rentalDurationWithFine =
                 ChronoUnit.DAYS.between(rental.getReturnDate(), rental.getActualReturnDate());
         BigDecimal dailyFee = rental.getCar().getDailyFee();

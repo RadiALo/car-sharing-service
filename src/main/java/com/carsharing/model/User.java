@@ -25,6 +25,7 @@ public class User {
     private String secondName;
     private String password;
     @Enumerated(EnumType.STRING)
+    @Column(name = "role", columnDefinition = "ENUM('MANAGER', 'CUSTOMER')")
     private Role role;
 
     public enum Role {

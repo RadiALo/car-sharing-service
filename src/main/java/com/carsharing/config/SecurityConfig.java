@@ -34,13 +34,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        "/health",
+                                        "/health-check",
                                         "/login",
                                         "/register",
                                         "/swagger-ui/**",
-                                        "payments/success",
+                                        "/swagger-ui.html",
+                                        "/v3/api-docs/**",
+                                        "/payments/success",
                                         "/payments/cancel",
-                                        "/cars"
+                                        "/inject"
                                 ).permitAll()
                                 .requestMatchers(HttpMethod.POST,
                                         "/cars",
@@ -50,11 +52,11 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,
                                         "/rentals",
                                         "/payments").hasAnyRole("CUSTOMER", "MANAGER")
+                                .requestMatchers(HttpMethod.GET, "/cars").permitAll()
                                 .requestMatchers(HttpMethod.GET,
                                         "users/me",
                                         "/cars/{id}").hasAnyRole("CUSTOMER", "MANAGER")
                                 .requestMatchers(HttpMethod.GET,
-                                        "/rentals",
                                         "/rentals/{id}",
                                         "/rentals/user/{id}").hasRole("MANAGER")
                                 .requestMatchers(HttpMethod.PUT,

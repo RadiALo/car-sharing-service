@@ -2,6 +2,7 @@ package com.carsharing.controller;
 
 import com.carsharing.dto.request.RentalRequestDto;
 import com.carsharing.dto.response.RentalResponseDto;
+import com.carsharing.exception.ReturnedRentalException;
 import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
 import com.carsharing.service.CarService;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/rentals")
 public class RentalController {
     private final RentalService rentalService;
@@ -84,10 +87,14 @@ public class RentalController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate actualTime) {
         Rental rental = rentalService.get(id);
         Car car = rental.getCar();
-        carService.inventoryIncrease(car);
-        rental.setActualReturnDate(actualTime);
-        rental.setActive(false);
-        rentalService.save(rental);
-        return dtoMapper.toDto(rental);
+        if (rental.getActualReturnDate() == null) {
+            carService.inventoryIncrease(car);
+            rental.setActualReturnDate(actualTime);
+            rental.setActive(false);
+            rentalService.save(rental);
+            notificationService.sentNotificationAboutReturnedCar(rental);
+            return dtoMapper.toDto(rental);
+        }
+        throw new ReturnedRentalException("This rental can't returned twice!");
     }
 }

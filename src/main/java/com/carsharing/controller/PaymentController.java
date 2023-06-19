@@ -3,6 +3,7 @@ package com.carsharing.controller;
 import com.carsharing.dto.request.PaymentRequestDto;
 import com.carsharing.dto.response.PaymentResponseDto;
 import com.carsharing.model.Payment;
+import com.carsharing.service.NotificationService;
 import com.carsharing.service.PaymentService;
 import com.carsharing.service.StripeService;
 import com.carsharing.service.mapper.DtoMapper;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,10 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/payments")
 public class PaymentController {
     private final StripeService stripeService;
     private final PaymentService paymentService;
+    private final NotificationService notificationService;
     private final DtoMapper<Payment, PaymentRequestDto, PaymentResponseDto> dtoMapper;
 
     @PostMapping
@@ -71,6 +75,7 @@ public class PaymentController {
         }
         payment.setStatus(Payment.Status.PAID);
         paymentService.update(payment);
+        notificationService.sentNotificationAboutSuccessfulPayment(payment.getRental());
         return "Your payment was successful!";
     }
 

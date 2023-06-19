@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
@@ -34,7 +37,7 @@ public class UserController {
             @PathVariable Long id,
             @Parameter(description = "User role: Customer or Manager", required = true,
                     schema = @Schema(type = "string", defaultValue = "CUSTOMER"))
-            @RequestBody User.Role role) {
+            @RequestParam User.Role role) {
         User user = userService.get(id);
         user.setRole(role);
         userService.update(user);

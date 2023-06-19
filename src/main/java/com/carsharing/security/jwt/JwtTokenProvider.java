@@ -25,7 +25,6 @@ public class JwtTokenProvider {
     private static final String BEARER = "Bearer ";
     private static final String ROLE = "role";
     private static final String HEADER_NAME = "Authorization";
-
     @Value("${spring.jwt.token.secret-key:secret}")
     private String secretKey;
     @Value("${spring.jwt.token.expire-length:360000000}")
@@ -57,8 +56,11 @@ public class JwtTokenProvider {
     }
 
     private String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
     public String resolveToken(HttpServletRequest req) {

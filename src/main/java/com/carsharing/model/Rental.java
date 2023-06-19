@@ -43,7 +43,7 @@ public class Rental {
                 + "id=" + id
                 + ", rentalDate=" + rentalDate
                 + ", returnDate=" + returnDate
-                + ", actualReturnDate=" + returnDate
+                + ", actualReturnDate=" + actualReturnDate
                 + ", isActive= " + active + "}";
     }
 }

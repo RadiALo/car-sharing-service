@@ -1,5 +1,6 @@
 package com.carsharing.service.impl;
 
+import com.carsharing.exception.UserNullIdException;
 import com.carsharing.model.User;
 import com.carsharing.repository.UserRepository;
 import com.carsharing.service.UserService;
@@ -24,9 +25,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
-        if (user.getId() != null) {
-            userRepository.save(user);
+        if (user.getId() == null) {
+            throw new UserNullIdException("Can`t update user with null id");
         }
+        userRepository.save(user);
     }
 
     @Override

@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
-        info =@Info(
+        info = @Info(
                 title = "Car sharing service API",
                 contact = @Contact(
                         name = "Github",

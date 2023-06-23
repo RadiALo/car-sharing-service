@@ -4,7 +4,7 @@ import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
 import com.carsharing.model.User;
 import com.carsharing.service.RentalService;
-import com.carsharing.service.impl.PaymentStrategyPayment;
+import com.carsharing.service.impl.PaymentHandlerPayment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ public class PaymentStrategyPaymentTest {
     private BigDecimal dailyFee;
 
     @InjectMocks
-    private PaymentStrategyPayment payment;
+    private PaymentHandlerPayment payment;
 
     @Mock
     private RentalService rentalService;

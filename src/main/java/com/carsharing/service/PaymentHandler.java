@@ -2,6 +2,6 @@ package com.carsharing.service;
 
 import java.math.BigDecimal;
 
-public interface PaymentStrategy {
+public interface PaymentHandler {
     BigDecimal calculateFineByType(Long rentalId);
 }

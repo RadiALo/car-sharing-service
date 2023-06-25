@@ -39,12 +39,13 @@ payment environment within the service.
 
     * Ensure Docker is installed and running.
     * Clone the repository.
-    * Set up the necessary environment variables in .env file.
+    * Create .env file in the root directory of the project and set up the necessary environment variables in it
+      (MYSQLDB_USER, MYSQLDB_ROOT_PASSWORD,MYSQLDB_DATABASE, MYSQLDB_LOCAL_PORT, MYSQLDB_DOCKER_PORT, SPRING_LOCAL_PORT, 
+      SPRING_DOCKER_PORT, BOT_USER_NAME, BOT_TOKEN, STRIPE_SECRET_KEY).
     * Build the project using the command: 'mvn clean package'.
     * Run the command: `docker-compose up'.
 Now you are ready for testing the application using [Swagger.](
 http://localhost:6868/swagger-ui/index.html#/)
-
 
 ## 📁 Architecture
 The project follows the following package structure:

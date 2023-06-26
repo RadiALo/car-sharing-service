@@ -37,13 +37,18 @@ payment environment within the service.
 
 ## ⚙️ Install (via Docker)
 
-    * Ensure Docker is installed and running.
-    * Clone the repository.
-    * Create .env file in the root directory of the project and set up the necessary environment variables in it
+    - Ensure Docker is installed and running.
+    - Clone the repository.
+    - Create .env file in the root directory of the project and set up the necessary environment variables in it
       (MYSQLDB_USER, MYSQLDB_ROOT_PASSWORD,MYSQLDB_DATABASE, MYSQLDB_LOCAL_PORT, MYSQLDB_DOCKER_PORT, SPRING_LOCAL_PORT, 
       SPRING_DOCKER_PORT, BOT_USER_NAME, BOT_TOKEN, STRIPE_SECRET_KEY).
-    * Build the project using the command: 'mvn clean package'.
-    * Run the command: `docker-compose up'.
+    - Build the project using the command: 'mvn clean package'.
+    - Run the command: `docker-compose up'.
+
+* During testing you can use this Stripe secret key (STRIPE_SECRET_KEY=sk_test_51NFd3VD0sZB6EWE2GI5ndukuM8X6xPRH4lzxElIW6GZi2fQdR2lxEyMLs2fVBLtPAxk2d7lwbkdMJRdl39xJDPyp0019juJXUk)
+* For creating a TelegramBot you should find BotFather in Telegram, choose an option "newbot" in it, come up with name 
+of new created bot and its username, then you get a TelegramBot token that you can use in your `.env` file.
+
 Now you are ready for testing the application using [Swagger.](
 http://localhost:6868/swagger-ui/index.html#/)
 

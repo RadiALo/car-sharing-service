@@ -65,11 +65,13 @@ public class RentalControllerTest {
         testUser.setRole(User.Role.CUSTOMER);
 
         testRental = new Rental();
+        testRental.setId(1L);
         testRental.setUser(testUser);
         testRental.setCar(testCar);
         testRental.setRentalDate(LocalDate.now());
         testRental.setActive(true);
         testRental.setReturnDate(LocalDate.of(2023, 06, 13));
+        testRental.setActualReturnDate(LocalDate.of(2023, 06, 13));
 
         rentalResponseDto = new RentalResponseDto();
         rentalResponseDto.setRentalDate(testRental.getRentalDate());
@@ -99,14 +101,11 @@ public class RentalControllerTest {
 
     @Test
     void setActualReturnDate_ok() {
-        Rental returnedRental = new Rental();
-        returnedRental.setCar(testCar);
-
-        Mockito.when(rentalService.get(testRental.getId())).thenReturn(returnedRental);
-        Mockito.when(dtoMapper.toDto(returnedRental)).thenReturn(rentalResponseDto);
-        RentalResponseDto actualResponseDto =
-                rentalController.setActualReturnDate
-                        (testRental.getId(), LocalDate.of(2023, 06, 13));
+        Mockito.when(rentalService.setActualReturnDate(testRental.getId(),testRental.getActualReturnDate()))
+                .thenReturn(testRental);
+        Mockito.when(dtoMapper.toDto(testRental)).thenReturn(rentalResponseDto);
+        RentalResponseDto actualResponseDto = rentalController
+                .setActualReturnDate(testRental.getId(), testRental.getActualReturnDate());
         Assertions.assertEquals(rentalResponseDto, actualResponseDto);
     }
 }

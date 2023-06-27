@@ -8,15 +8,15 @@ enhances the user experience.
 
 ## 🎯Key Features
 
-`User Management:` Facilitates user registration, login, and role-based authorization, allowing different user levels 
+🛂 `User Management:` Facilitates user registration, login, and role-based authorization, allowing different user levels 
 to have appropriate access and capabilities within the service. Users can securely create accounts, log in to the system, 
 and perform actions based on their assigned roles.
 
-`Exception Handling:` Implements robust exception handling with descriptive messages, enhancing the user experience by 
+❗️ `Exception Handling:` Implements robust exception handling with descriptive messages, enhancing the user experience by 
 providing clear and informative error messages. This makes it easier to identify and resolve issues, ensuring a smooth 
 user journey.
 
-`Flexible Endpoints:` Offers multiple endpoints with user and admin access, catering to the specific functionalities and 
+☑️ `Flexible Endpoints:` Offers multiple endpoints with user and admin access, catering to the specific functionalities and 
 operations required by different user types. Users and administrators can interact with the system through designated 
 endpoints, ensuring efficient and secure access.
 

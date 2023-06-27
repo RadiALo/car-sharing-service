@@ -8,15 +8,15 @@ enhances the user experience.
 
 ## 🎯Key Features
 
-`User Management:` Facilitates user registration, login, and role-based authorization, allowing different user levels 
+🛂 `User Management:` Facilitates user registration, login, and role-based authorization, allowing different user levels 
 to have appropriate access and capabilities within the service. Users can securely create accounts, log in to the system, 
 and perform actions based on their assigned roles.
 
-`Exception Handling:` Implements robust exception handling with descriptive messages, enhancing the user experience by 
+❗️ `Exception Handling:` Implements robust exception handling with descriptive messages, enhancing the user experience by 
 providing clear and informative error messages. This makes it easier to identify and resolve issues, ensuring a smooth 
 user journey.
 
-`Flexible Endpoints:` Offers multiple endpoints with user and admin access, catering to the specific functionalities and 
+☑️ `Flexible Endpoints:` Offers multiple endpoints with user and admin access, catering to the specific functionalities and 
 operations required by different user types. Users and administrators can interact with the system through designated 
 endpoints, ensuring efficient and secure access.
 
@@ -37,14 +37,20 @@ payment environment within the service.
 
 ## ⚙️ Install (via Docker)
 
-    * Ensure Docker is installed and running.
-    * Clone the repository.
-    * Set up the necessary environment variables in .env file.
-    * Build the project using the command: 'mvn clean package'.
-    * Run the command: `docker-compose up'.
+    - Ensure Docker is installed and running.
+    - Clone the repository.
+    - Create .env file in the root directory of the project and set up the necessary environment variables in it
+      (MYSQLDB_USER, MYSQLDB_ROOT_PASSWORD,MYSQLDB_DATABASE, MYSQLDB_LOCAL_PORT, MYSQLDB_DOCKER_PORT, SPRING_LOCAL_PORT, 
+      SPRING_DOCKER_PORT, BOT_USER_NAME, BOT_TOKEN, STRIPE_SECRET_KEY).
+    - Build the project using the command: 'mvn clean package'.
+    - Run the command: `docker-compose up'.
+
+* During testing you can use this Stripe secret key (STRIPE_SECRET_KEY=sk_test_51NFd3VD0sZB6EWE2GI5ndukuM8X6xPRH4lzxElIW6GZi2fQdR2lxEyMLs2fVBLtPAxk2d7lwbkdMJRdl39xJDPyp0019juJXUk)
+* For creating a TelegramBot you should find BotFather in Telegram, choose an option "newbot" in it, come up with name 
+of new created bot and its username, then you get a TelegramBot token that you can use in your `.env` file.
+
 Now you are ready for testing the application using [Swagger.](
 http://localhost:6868/swagger-ui/index.html#/)
-
 
 ## 📁 Architecture
 The project follows the following package structure:

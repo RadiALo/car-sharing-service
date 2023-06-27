@@ -30,10 +30,6 @@ public class PaymentMapper implements DtoMapper<Payment, PaymentRequestDto, Paym
         Payment payment = new Payment();
         payment.setRental(rentalService.get(requestDto.getRentalId()));
         payment.setType(requestDto.getType());
-        payment.setSessionUrl(requestDto.getSessionUrl());
-        payment.setAmount(requestDto.getAmount());
-        payment.setStatus(requestDto.getStatus());
-        payment.setSessionId(requestDto.getSessionId());
         return payment;
     }
 }

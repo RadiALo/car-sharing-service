@@ -1,7 +1,7 @@
 package com.carsharing.service.impl;
 
 import com.carsharing.model.Rental;
-import com.carsharing.service.PaymentStrategy;
+import com.carsharing.service.PaymentHandler;
 import com.carsharing.service.RentalService;
 import java.math.BigDecimal;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class PaymentStrategyPayment implements PaymentStrategy {
+public class PaymentHandlerPayment implements PaymentHandler {
     private static final BigDecimal numberToConvertFromCentsToDollars = BigDecimal.valueOf(100);
     private final RentalService rentalService;
 

@@ -6,7 +6,6 @@ import com.carsharing.dto.response.RentalResponseDto;
 import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
 import com.carsharing.model.User;
-import com.carsharing.service.CarService;
 import com.carsharing.service.RentalService;
 import com.carsharing.service.mapper.DtoMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +32,6 @@ public class RentalControllerTest {
     private Rental testRental;
     private Car testCar;
     private User testUser;
-    private RentalRequestDto rentalRequestDto;
     private RentalResponseDto rentalResponseDto;
 
     @InjectMocks
@@ -44,9 +42,6 @@ public class RentalControllerTest {
 
     @Mock
     private DtoMapper<Rental, RentalRequestDto, RentalResponseDto> dtoMapper;
-
-    @Mock
-    private CarService carService;
 
     @BeforeEach
     void init() {

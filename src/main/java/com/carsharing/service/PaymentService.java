@@ -11,6 +11,8 @@ public interface PaymentService {
 
     Payment update(Payment payment);
 
+    Payment createStripeSession(Long rentalId, Payment.Type type);
+
     boolean isSessionPaid(String sessionId);
 
     List<Payment> findByUserId(Long id);

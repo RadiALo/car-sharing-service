@@ -2,10 +2,7 @@ package com.carsharing.controller;
 
 import com.carsharing.dto.request.RentalRequestDto;
 import com.carsharing.dto.response.RentalResponseDto;
-import com.carsharing.model.Car;
 import com.carsharing.model.Rental;
-import com.carsharing.service.CarService;
-import com.carsharing.service.NotificationService;
 import com.carsharing.service.RentalService;
 import com.carsharing.service.mapper.DtoMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,8 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RentalController {
     private final RentalService rentalService;
     private final DtoMapper<Rental, RentalRequestDto, RentalResponseDto> dtoMapper;
-    private final CarService carService;
-    private final NotificationService notificationService;
 
     @PostMapping
     @Operation(summary = "Create a new rental")
@@ -44,17 +39,10 @@ public class RentalController {
             content = @Content(schema = @Schema(implementation =
                     RentalRequestDto.class)))
             @RequestBody @Valid RentalRequestDto requestDto) {
-        Rental rental = dtoMapper.toModel(requestDto);
-        Car car = rental.getCar();
-        rental.setActive(true);
-        if (car.getInventory() > 0) {
-            rentalService.save(rental);
-            notificationService.sendNotificationAboutPossibleRental(rental);
-            carService.inventoryDecrease(car);
-            return dtoMapper.toDto(rental);
-        }
-        notificationService.sendNotificationAboutImpossibleRental(rental);
-        return new RentalResponseDto();
+        Rental rental =
+                rentalService.createRentalWithNotificationAndDecrementingInventory(
+                        dtoMapper.toModel(requestDto));
+        return dtoMapper.toDto(rental);
     }
 
     @GetMapping("/{id}")
@@ -84,13 +72,6 @@ public class RentalController {
             @PathVariable Long id,
             @Parameter(description = "Write return date", required = true)
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate actualTime) {
-        Rental rental = rentalService.get(id);
-        Car car = rental.getCar();
-        carService.inventoryIncrease(car);
-        rental.setActualReturnDate(actualTime);
-        rental.setActive(false);
-        rentalService.save(rental);
-        notificationService.sentNotificationAboutReturnedCar(rental);
-        return dtoMapper.toDto(rental);
+        return dtoMapper.toDto(rentalService.setActualReturnDate(id, actualTime));
     }
 }

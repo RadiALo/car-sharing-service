@@ -1,7 +1,7 @@
 package com.carsharing.service.impl;
 
 import com.carsharing.model.Rental;
-import com.carsharing.service.PaymentStrategy;
+import com.carsharing.service.PaymentHandler;
 import com.carsharing.service.RentalService;
 import java.math.BigDecimal;
 import java.time.temporal.ChronoUnit;
@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class PaymentStrategyFine implements PaymentStrategy {
-    private static final BigDecimal FINE = BigDecimal.valueOf(0.15);
+public class PaymentHandlerPayment implements PaymentHandler {
     private static final BigDecimal numberToConvertFromCentsToDollars = BigDecimal.valueOf(100);
     private final RentalService rentalService;
 
@@ -22,13 +21,12 @@ public class PaymentStrategyFine implements PaymentStrategy {
             throw new RuntimeException("You haven't returned the car yet");
         }
         long rentalDuration =
-                ChronoUnit.DAYS.between(rental.getActualReturnDate(), rental.getRentalDate());
-        long rentalDurationWithFine =
-                ChronoUnit.DAYS.between(rental.getReturnDate(), rental.getActualReturnDate());
+                ChronoUnit.DAYS.between(rental.getRentalDate(), rental.getActualReturnDate());
         BigDecimal dailyFee = rental.getCar().getDailyFee();
-        final long amountToPay = ((rentalDurationWithFine * dailyFee.longValue())
-                + (rentalDurationWithFine * dailyFee.longValue() * FINE.longValue()))
-                + (rentalDuration * dailyFee.longValue());
+        if (rentalDuration == 0) {
+            return dailyFee.multiply(numberToConvertFromCentsToDollars);
+        }
+        final long amountToPay = rentalDuration * dailyFee.longValue();
         return BigDecimal.valueOf(amountToPay).multiply(numberToConvertFromCentsToDollars);
     }
 }
